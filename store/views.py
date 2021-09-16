@@ -1,17 +1,26 @@
 from django.shortcuts import render, redirect
 from .models import *
 from getmac import get_mac_address as gma
+import platform, re, uuid
+
 
 
 def store(request):
+    ifa = platform.uname()
     try:
-        ip = gma()
-    except Exception:
-        ip = '0.0.0.0'
+        processor = ifa.processor
+    except:
+        processor = 'None'
     try:
-        customer = Customer.objects.get(ip=ip)
+        mc = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
+    except:
+        mc = 'None'
+    ip = f'mc:{mc};;processor:{processor}'
+    print(f'\n\n processor: {processor}, \nsystem: {ifa.system}, \nnode: {ifa.node}, \nmachine: {ifa.machine}, \nmc: {mc}')
+    try:
+        Customer.objects.get(ip=ip)
         print(f'\n\n found ip: {ip}')
     except:
-        customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=ip)
+        Customer.objects.create(name=mc, email=mc+'@gmail.com', ip=ip)
         print(f"\n\n didn't found ip: {ip}")
     return render(request, 'store/store.html', {})
