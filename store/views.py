@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect
 from .models import *
 from getmac import get_mac_address as gma
-import platform, getpass
-
+import getpass, os
+from ipware import get_client_ip as getip
 
 
 def store(request):
-    ifa = platform.uname()
+    user = os.path.expanduser('~')
+    try:
+        ip = getip()
+    except:
+        ip = '0.0.0.0'
     try:
         mc = gma()
     except:
@@ -15,7 +19,7 @@ def store(request):
         usrnm = (getpass.getuser())
     except:
         usrnm = 'None'
-    ip = f'mc:{mc};;username:{usrnm}'
+    ip = f'mc:{mc};;username:{user};;ip:{ip}'
     try:
         Customer.objects.get(ip=ip)
         print(f'\n\n found ip: {ip}')
