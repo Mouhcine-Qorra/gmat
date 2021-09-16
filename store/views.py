@@ -12,11 +12,18 @@ def store(request):
     except:
         processor = 'None'
     try:
-        mc = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
+        machine = ifa.machine
     except:
-        mc = 'None'
-    ip = f'mc:{mc};;processor:{processor}'
-    print(f'\n\n processor: {processor}, \nsystem: {ifa.system}, \nnode: {ifa.node}, \nmachine: {ifa.machine}, \nmc: {mc}')
+        machine = 'None'
+    try:
+        mc = gma()
+    except:
+        mc = '0.0.0.0'
+    try:
+        system = ifa.system
+    except:
+        system = 'None'
+    ip = f'mc:{mc};;machine:{machine};;system:{system};;processor:{processor}'
     try:
         Customer.objects.get(ip=ip)
         print(f'\n\n found ip: {ip}')
