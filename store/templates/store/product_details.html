@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+{% load static %}
+{% load user_agents %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <style>
+        header{
+            position: absolute;
+            z-index: 999;
+            width: 100%;
+        }
+        .form input{
+            width: 500px;
+            margin-bottom: -15px;
+            border-radius: 0;
+            border-bottom: 3px solid silver;
+            background: transparent;
+            border: none;
+        }
+        .form button{
+            color: white;
+            background: rgba(0,0,0,0.5)};
+            padding: 0 10px;
+            border-radius: 0;
+        }
+
+        main{
+            padding-top: 50px;
+            background: #EBEBEB;
+        }
+        hr{
+            background: #E1E1E1;
+        }
+        .watch-model{
+            position: relative;
+            top: 250px;
+        }
+        .watch-model img{
+            cursor: pointer;
+            transition: .5s;
+        }
+        .watch-model img:hover{
+            transform: translateX(10px);
+        }
+        .preview img{
+            position: relative;
+            left: -60px;
+        }
+        .parameter{
+            padding-top: 70px;
+        }
+        .parameter h6{
+            font-size: 2em;
+            font-weight: 400;
+            letter-spacing: 3px;
+        }
+        .parameter h1{
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-top: -20px;
+        }
+        .parameter p{
+            color: #a8a8a8;
+        }
+        .parameter h5{
+            letter-spacing: 4px;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+        .parameter h5 span{
+            letter-spacing: 0;
+            color: #a8a8a8;
+            font-size: 0.8em;
+        }
+        .parameter h2{
+            font-weight: 700;
+            font-size: 3em;
+        }
+        .parameter h2 span{
+            font-weight: 400;
+            font-size: 0.8em;
+        }
+        .cart{
+            margin-top: 20px;
+        }
+        .cart button{
+            padding: 15px 20px;
+            background: #474747;
+            color: white;
+            border-radius: 0;
+            margin-left: 10px;
+        }
+        .cart button:first-of-type{
+            padding: 15px 100px;
+            background: #474747;
+            color: white;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+    <!--===== Export HEADER and NAVBAR =====-->
+    <header>
+        <div class="container-fluid">
+        </div>
+    </header>
+
+    <!--===== MAIN =====-->
+    {% if request|is_pc %}
+    <main>
+        <div class="container-fluid">
+            <div class="row no-gutters">
+                <div class="col-xl-7">
+                    <div class="content-watch">
+                        <div class="row no-gutters">
+                            <div class="col-xl-3 watch-model">
+                                <p><img src="{% static 'img/main/delete.png' %}" width="60" id="img1" alt=""></p>
+                                <p><img src="{% static 'img/products/headphones.jpg' %}" width="60" id="img2" alt=""></p>
+                                <p><img src="{% static 'img/products/S20.jpg' %}" width="60" id="img3" alt=""></p>
+                                <p><img src="{% static 'img/mouhcin.jpg' %}" width="60" id="img4" alt=""></p>
+                            </div>
+                            <div class="col-xl-9 preview">
+                                <img src="{% static 'img/main/cart.png' %}" class="img-fluid" id="preview" width="550" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5">
+                    <div class="parameter">
+                        <h6>SILVER</h6>
+                        <h1 class="display-2">ROLEX</h1>
+                        <p>Model: 116500</p>
+                        <hr>
+                        <h6>COLOR</h6>
+                        <div class="row no-gutters mt-4">
+                            <i class="fa fa-circle text-light"></i>
+                            <i class="fa fa-circle text-warning ml-3"></i>
+                            <i class="fa fa-circle text-dark ml-3"></i>
+                        </div>
+                        <hr>
+                        <div class="detail">
+                            <h5>MOVEMENT: <span>Eco-Drive</span></h5>
+                            <h5>CASE SIZE: <span>43mm</span></h5>
+                            <h5>MATERIAL: <span>Silver</span></h5>
+                        </div>
+                        <hr>
+                        <div class="price">
+                            <h2><span><sup>$</sup></span>1,250</h2>
+                        </div>
+                        <div class="cart">
+                            <div class="row no-gutters">
+                                <button class="btn">ADD TO CART</button>
+                                <button class="btn"><i class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endif %}
+
+    <!--===== SCRIPTS =====-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var img1 = $('#img1').attr('src');
+            var img2 = $('#img2').attr('src');
+            var img3 = $('#img3').attr('src');
+            var img4 = $('#img4').attr('src');
+            $('#img1').click(function() {
+                $('#preview').fadeOut(0);
+                $('#preview').stop().fadeIn(400).attr('src', img1);
+            });
+            $('#img2').click(function() {
+                $('#preview').fadeOut(0);
+                $('#preview').stop().fadeIn(400).attr('src', img2);
+            });
+            $('#img3').click(function() {
+                $('#preview').fadeOut(0);
+                $('#preview').stop().fadeIn(400).attr('src', img3);
+            });
+            $('#img4').click(function() {
+                $('#preview').fadeOut(0);
+                $('#preview').stop().fadeIn(400).attr('src', img4);
+            });
+        });
+    </script>
+</body>
+</html>
