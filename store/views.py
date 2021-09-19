@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import datetime, os, json
 from .filters import ProductFilter
-import socket
+from .utils import minfunc
 
 
 
@@ -61,72 +61,18 @@ def portfolio(request):
     return render(request, 'store/portfolio.html', {'var': var})
 
 def store(request):
-    total, total_items = 0, 0
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        try:
-            order, created = Order.objects.get_or_create(customer=customer)
-        except:
-            order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.filter(is_current=True)
-        for item in items:
-            total = total + float(item.quantity_price())
-        for item in items:
-            total_items = total_items + item.quantity
-    else:
-        ip, is_routable = get_client_ip(request)
-        if not ip:
-            ip = '0.0.0.0'
-        IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
-        try:
-            customer = Customer.objects.get(ip=IP)
-        except:
-            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
-        try:
-            order, created = Order.objects.get_or_create(customer=customer)
-        except:
-            order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.filter(is_current=True)
-        for item in items:
-            total = total + float(item.quantity_price())
-        for item in items:
-            total_items = total_items + item.quantity
+    data = minfunc(request)
+    total_items = data['total_items']
     products = Product.objects.all()
     myfilter = ProductFilter(request.GET, queryset=products)
     products = myfilter.qs
     return render(request, 'store/store.html', {'products': products, 'total_items': total_items, 'filter': myfilter})
 
 def cart(request):
-    total, total_items = 0, 0
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        try:
-            order, created = Order.objects.get_or_create(customer=customer)
-        except:
-            order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.filter(is_current=True)
-        for item in items:
-            total = total + float(item.quantity_price())
-        for item in items:
-            total_items = total_items + item.quantity
-    else:
-        ip, is_routable = get_client_ip(request)
-        if not ip:
-            ip = '0.0.0.0'
-        IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
-        try:
-            customer = Customer.objects.get(ip=IP)
-        except:
-            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
-        try:
-            order, created = Order.objects.get_or_create(customer=customer)
-        except:
-            order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.filter(is_current=True)
-        for item in items:
-            total = total + float(item.quantity_price())
-        for item in items:
-            total_items = total_items + item.quantity
+    data = minfunc(request)
+    items = data['items']
+    total_items = data['total_items']
+    total = data['total']
     return render(request, 'store/cart.html', {'items': items, 'total': total, 'total_items': total_items})
 
 def checkout(request):
@@ -253,29 +199,33 @@ def register(request):
     if request.user.is_authenticated:
         return redirect('store')
     else:
+        print('\n\n dkhl else dial no auth')
         form = CreateUserForm()
         if request.method == 'POST':
+            print('\n\n dkhl POST')
             form = CreateUserForm(request.POST)
             if form.is_valid():
                 ip, is_routable = get_client_ip(request)
                 if not ip:
                     ip = '0.0.0.0'
                 IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
-                user = form.save(commit=False)
+                user = form.save()
                 username = form.cleaned_data.get('username')
                 email = form.cleaned_data.get('email')
                 password = request.POST.get('password1')
                 # try get users who already have make an order
+                print('\n\n wsl 9bl try')
                 try:
+                    print('\n\n daz mn try wl9a cust')
                     customer = Customer.objects.get(email=email)
-                    print('f\n\n daz mn try wl9a cust')
+                    print('\n\nconfirm: daz mn try wl9a cust')
                     if customer.user is not None:
                         print('f\n\n l9a deja user mls9 m3a cust')
                         # check if that user already have an account
                         messages.error(request, 'account already exist with this email! please try to login or reset password')
                         return render(request, 'auth/login.html', {'form': form})
                     else:
-                        print('f\n\n ls9 user m3a cust')
+                        print('\n\n ls9 user m3a cust')
                         customer.user = user
                     customer.name = username
                     customer.email = email
@@ -284,7 +234,7 @@ def register(request):
                     customer.save()
                 except:
                     Customer.objects.create(user=user, name=username, email=email, ip=IP)
-                    print('f\n\ndazt mn except w crea cust jdid')
+                    print('\n\ndazt mn except w crea cust jdid')
                 userlogin = authenticate(request, username=username, password=password)
                 if userlogin is not None:
                     login(request, userlogin)
@@ -292,6 +242,8 @@ def register(request):
                 else:
                     messages.info(request, 'Account already exist!')
                 return redirect('store')
+            else:
+                messages.error(request, 'please fill all fields with correct informations')
         return render(request, 'auth/register.html', {'form': form})
 
 def login_view(request):
