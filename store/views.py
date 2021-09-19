@@ -49,7 +49,7 @@ def portfolio(request):
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=f'{ip}@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
         if request.method == 'POST':
             if form.is_valid():
                 Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=request.POST['message'], ip=IP)
@@ -81,7 +81,7 @@ def store(request):
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
         try:
             order, created = Order.objects.get_or_create(customer=customer)
         except:
@@ -117,7 +117,7 @@ def cart(request):
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
         try:
             order, created = Order.objects.get_or_create(customer=customer)
         except:
@@ -202,7 +202,6 @@ def checkout(request):
     return render(request, 'store/checkout.html', {'items': items, 'customer': customer, 'total': total, 'total_items': total_items, 'form': form})
 
 
-
 def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
@@ -219,7 +218,7 @@ def updateItem(request):
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     item, created = OrderItem.objects.get_or_create(order=order, product=product)
@@ -243,7 +242,7 @@ def delete_item(request, id):
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
     product = Product.objects.get(id=id)
     order = Order.objects.get(customer=customer, complete=False)
     item = OrderItem.objects.get(order=order, product=product, is_current=True)
@@ -262,18 +261,21 @@ def register(request):
                 if not ip:
                     ip = '0.0.0.0'
                 IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
-                user = form.save()
+                user = form.save(commit=False)
                 username = form.cleaned_data.get('username')
                 email = form.cleaned_data.get('email')
                 password = request.POST.get('password1')
                 # try get users who already have make an order
                 try:
                     customer = Customer.objects.get(email=email)
+                    print('f\n\n daz mn try wl9a cust')
                     if customer.user is not None:
+                        print('f\n\n l9a deja user mls9 m3a cust')
                         # check if that user already have an account
                         messages.error(request, 'account already exist with this email! please try to login or reset password')
                         return render(request, 'auth/login.html', {'form': form})
                     else:
+                        print('f\n\n ls9 user m3a cust')
                         customer.user = user
                     customer.name = username
                     customer.email = email
@@ -282,6 +284,7 @@ def register(request):
                     customer.save()
                 except:
                     Customer.objects.create(user=user, name=username, email=email, ip=IP)
+                    print('f\n\ndazt mn except w crea cust jdid')
                 userlogin = authenticate(request, username=username, password=password)
                 if userlogin is not None:
                     login(request, userlogin)
