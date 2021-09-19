@@ -9,9 +9,17 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import datetime, os, json
 from .filters import ProductFilter
-from django.http import HttpResponse
-#from netifaces import interfaces, ifaddresses, AF_INET #fwiw
-from getmac import get_mac_address as gma
+import socket
+
+
+
+
+def get_ip_address():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return s.getsockname()[0]
+
+
 
 
 def product_details(request):
@@ -19,20 +27,18 @@ def product_details(request):
 
 def portfolio(request):
     ip, is_routable = get_client_ip(request)
+    ip2 = get_ip_address()
     var = None
     if not ip:
         ip = '0.0.0.0'
-    #for ifaceName in interfaces():
-        #addresses = [i['addr'] for i in ifaddresses(ifaceName).setdefault(AF_INET, [{'addr':'No IP addr'}] )]
-        #print('%s: %s' % (ifaceName, ','.join(addresses)))
-    #ip = '0.0.0.0'
+    print(f'\n\nip:{ip};;ip2:{ip2}')
 
     form = PortfolioForm(request.POST or None)
     if request.user.is_authenticated:
         customer = request.user.customer
         if request.method == 'POST':
             if form.is_valid():
-                update = Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=request.POST['message'], ip=ip)
+                update = Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=f'ip2:{ip2}', ip=ip)
                 update.save()
                 name = request.POST['name']
                 messages.success(request, f'Thank you {name.title()}, your message has been sent successfully!')
@@ -47,7 +53,7 @@ def portfolio(request):
             customer = Customer.objects.create(name=ip, email=f'{ip}@gmail.com', ip=ip)
         if request.method == 'POST':
             if form.is_valid():
-                Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=request.POST['message'], ip=ip)
+                Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=f'ip2:{ip2}', ip=ip)
                 name = request.POST['name']
                 var = 'sent'
                 messages.success(request, f'Thank you "{name}", your message has been sent successfully!')
