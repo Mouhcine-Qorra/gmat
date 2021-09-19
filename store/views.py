@@ -13,11 +13,12 @@ import socket
 
 
 
+## get another ip of same user (2 IPs in total from same user)
+#def get_ip_address():
+#    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#    s.connect(("8.8.8.8", 80))
+#    return s.getsockname()[0]
 
-def get_ip_address():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(("8.8.8.8", 80))
-    return s.getsockname()[0]
 
 
 
@@ -27,37 +28,33 @@ def product_details(request):
 
 def portfolio(request):
     ip, is_routable = get_client_ip(request)
-    ip2 = get_ip_address()
-    device_info = request.META['HTTP_USER_AGENT']
     var = None
     if not ip:
         ip = '0.0.0.0'
-    print(f'\n\nip:{ip};;ip2:{ip2};;device_info:{device_info}')
+    IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
+    print(f'\n\nip:{IP}')
 
     form = PortfolioForm(request.POST or None)
     if request.user.is_authenticated:
         customer = request.user.customer
         if request.method == 'POST':
             if form.is_valid():
-                update = Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=f'ip2:{ip2}', ip=ip)
-                update.save()
-                name = request.POST['name']
-                messages.success(request, f'Thank you {name.title()}, your message has been sent successfully!')
+                Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=request.POST['message'], ip=IP)
+                messages.success(request, f'Thank you {str(request.POST["name"]).title()}, your message has been sent successfully!')
                 var = 'sent'
                 return render(request, 'store/portfolio.html', {'var': var})
             else:
                 messages.error(request, 'Please fill all required fields')
     else:
         try:
-            customer = Customer.objects.get(ip=ip)
+            customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=f'{ip}@gmail.com', ip=ip)
+            customer = Customer.objects.create(name=ip, email=f'{ip}@gmail.com', ip=IP)
         if request.method == 'POST':
             if form.is_valid():
-                Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=f'ip2:{ip2}', ip=ip)
-                name = request.POST['name']
+                Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=request.POST['message'], ip=IP)
                 var = 'sent'
-                messages.success(request, f'Thank you "{name}", your message has been sent successfully!')
+                messages.success(request, f'Thank you "{str(request.POST["name"]).title()}", your message has been sent successfully!')
                 return render(request, 'store/portfolio.html', {'var': var})
             else:
                 messages.error(request, 'Please fill all required fields')
