@@ -28,10 +28,11 @@ def product_details(request):
 def portfolio(request):
     ip, is_routable = get_client_ip(request)
     ip2 = get_ip_address()
+    device_info = request.META['HTTP_USER_AGENT']
     var = None
     if not ip:
         ip = '0.0.0.0'
-    print(f'\n\nip:{ip};;ip2:{ip2}')
+    print(f'\n\nip:{ip};;ip2:{ip2};;device_info:{device_info}')
 
     form = PortfolioForm(request.POST or None)
     if request.user.is_authenticated:
