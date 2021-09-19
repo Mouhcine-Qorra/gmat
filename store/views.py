@@ -116,7 +116,7 @@ def checkout(request):
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=ip, email=IP+'@gmail.com', ip=IP)
         try:
             order, created = Order.objects.get_or_create(customer=customer)
         except:
@@ -218,7 +218,10 @@ def register(request):
                     user = form.save()
                 # try get users who already have make an order
                 try:
-                    customer = Customer.objects.get(email=email)
+                    try:
+                        customer = Customer.objects.get(email=email)
+                    except:
+                        customer = Customer.objects.get(email=IP+'@gmail.com')
                     if customer.user is not None:
                         # check if that user already have an account
                         messages.error(request, 'account already exist with this email! please try to login or reset password')
@@ -230,8 +233,10 @@ def register(request):
                     if customer.ip == f'0.0.0.0||{str(request.META["HTTP_USER_AGENT"])}':
                         customer.ip = IP
                     customer.save()
+                    print(f'\n\ndaz mn try')
                 except:
                     Customer.objects.create(user=user, name=username, email=email, ip=IP)
+                    print(f'\n\ndaz mn except')
                 userlogin = authenticate(request, username=username, password=password)
                 if userlogin is not None:
                     login(request, userlogin)
