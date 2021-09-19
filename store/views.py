@@ -148,6 +148,7 @@ def checkout(request):
     return render(request, 'store/checkout.html', {'items': items, 'customer': customer, 'total': total, 'total_items': total_items, 'form': form})
 
 
+
 def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
@@ -199,33 +200,30 @@ def register(request):
     if request.user.is_authenticated:
         return redirect('store')
     else:
-        print('\n\n dkhl else dial no auth')
         form = CreateUserForm()
         if request.method == 'POST':
-            print('\n\n dkhl POST')
             form = CreateUserForm(request.POST)
             if form.is_valid():
                 ip, is_routable = get_client_ip(request)
                 if not ip:
                     ip = '0.0.0.0'
                 IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
-                user = form.save()
-                username = form.cleaned_data.get('username')
                 email = form.cleaned_data.get('email')
+                username = form.cleaned_data.get('username')
                 password = request.POST.get('password1')
+                if User.objects.filter(email=email).exists():
+                    messages.info(request, 'User with this email already exist! try to login')
+                    return redirect('login')
+                else:
+                    user = form.save()
                 # try get users who already have make an order
-                print('\n\n wsl 9bl try')
                 try:
-                    print('\n\n daz mn try wl9a cust')
                     customer = Customer.objects.get(email=email)
-                    print('\n\nconfirm: daz mn try wl9a cust')
                     if customer.user is not None:
-                        print('f\n\n l9a deja user mls9 m3a cust')
                         # check if that user already have an account
                         messages.error(request, 'account already exist with this email! please try to login or reset password')
                         return render(request, 'auth/login.html', {'form': form})
                     else:
-                        print('\n\n ls9 user m3a cust')
                         customer.user = user
                     customer.name = username
                     customer.email = email
@@ -234,7 +232,6 @@ def register(request):
                     customer.save()
                 except:
                     Customer.objects.create(user=user, name=username, email=email, ip=IP)
-                    print('\n\ndazt mn except w crea cust jdid')
                 userlogin = authenticate(request, username=username, password=password)
                 if userlogin is not None:
                     login(request, userlogin)
