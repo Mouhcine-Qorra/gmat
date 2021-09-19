@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib.auth.models import User as p
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .forms import ShippingForm, CreateUserForm, PortfolioForm
 from ipware import get_client_ip
 from django.contrib.auth import authenticate, login, logout
@@ -75,13 +75,13 @@ def store(request):
             total_items = total_items + item.quantity
     else:
         ip, is_routable = get_client_ip(request)
-        var = None
         if not ip:
             ip = '0.0.0.0'
+        IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
         try:
-            customer = Customer.objects.get(ip=ip)
+            customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=ip)
+            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
         try:
             order, created = Order.objects.get_or_create(customer=customer)
         except:
@@ -111,13 +111,13 @@ def cart(request):
             total_items = total_items + item.quantity
     else:
         ip, is_routable = get_client_ip(request)
-        var = None
         if not ip:
             ip = '0.0.0.0'
+        IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
         try:
-            customer = Customer.objects.get(ip=ip)
+            customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=ip)
+            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
         try:
             order, created = Order.objects.get_or_create(customer=customer)
         except:
@@ -133,7 +133,6 @@ def checkout(request):
     total, total_items = 0, 0
     form = ShippingForm(request.POST or None)
     if request.user.is_authenticated:
-        #ip, is_routable = get_client_ip(request)
         customer = request.user.customer
         id_customer = customer.id
         try:
@@ -165,13 +164,13 @@ def checkout(request):
                 messages.error(request, 'Please fill all required fields')
     else:
         ip, is_routable = get_client_ip(request)
-        var = None
         if not ip:
             ip = '0.0.0.0'
+        IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
         try:
-            customer = Customer.objects.get(ip=ip)
+            customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=ip)
+            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
         try:
             order, created = Order.objects.get_or_create(customer=customer)
         except:
@@ -188,7 +187,7 @@ def checkout(request):
             if form.is_valid():
                 update = Customer(id=id_customer, name=request.POST['name'], email=request.POST['email'])
                 update.save(update_fields=["name", "email"])
-                data = ShippingAdress.objects.create(customer=customer, order=order, address=request.POST['address'],
+                ShippingAdress.objects.create(customer=customer, order=order, address=request.POST['address'],
                                               city=request.POST['city'], zipcode=request.POST['zipcode'])
                 order.complete = True
                 transaction_id = datetime.datetime.now().timestamp()
@@ -214,13 +213,13 @@ def updateItem(request):
         customer = Customer.objects.get(user=user_inf)
     else:
         ip, is_routable = get_client_ip(request)
-        var = None
         if not ip:
             ip = '0.0.0.0'
+        IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
         try:
-            customer = Customer.objects.get(ip=ip)
+            customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=ip)
+            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     item, created = OrderItem.objects.get_or_create(order=order, product=product)
@@ -238,13 +237,13 @@ def delete_item(request, id):
         customer = request.user.customer
     else:
         ip, is_routable = get_client_ip(request)
-        var = None
         if not ip:
             ip = '0.0.0.0'
+        IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
         try:
-            customer = Customer.objects.get(ip=ip)
+            customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=ip)
+            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
     product = Product.objects.get(id=id)
     order = Order.objects.get(customer=customer, complete=False)
     item = OrderItem.objects.get(order=order, product=product, is_current=True)
@@ -254,6 +253,7 @@ def delete_item(request, id):
 def register(request):
     if request.user.is_authenticated:
         return redirect('store')
+    else:
         form = CreateUserForm()
         if request.method == 'POST':
             form = CreateUserForm(request.POST)
@@ -261,6 +261,7 @@ def register(request):
                 ip, is_routable = get_client_ip(request)
                 if not ip:
                     ip = '0.0.0.0'
+                IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
                 user = form.save()
                 username = form.cleaned_data.get('username')
                 email = form.cleaned_data.get('email')
@@ -276,11 +277,11 @@ def register(request):
                         customer.user = user
                     customer.name = username
                     customer.email = email
-                    if customer.ip == '0.0.0.0':
-                        customer.ip = ip
+                    if customer.ip == f'0.0.0.0||{str(request.META["HTTP_USER_AGENT"])}':
+                        customer.ip = IP
                     customer.save()
                 except:
-                    Customer.objects.create(user=user, name=username, email=email, ip=ip)
+                    Customer.objects.create(user=user, name=username, email=email, ip=IP)
                 userlogin = authenticate(request, username=username, password=password)
                 if userlogin is not None:
                     login(request, userlogin)
