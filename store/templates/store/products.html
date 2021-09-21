@@ -160,20 +160,54 @@
                 font-size: 0.8rem;
                 padding: .4rem 1rem;
             }
+            .product-desc{
+                border-radius: 0;
+            }
             .product-desc h3{
+                display: inline-block;
                 font-size: .9rem;
                 color: #333;
                 text-transform: capitalize;
                 margin-bottom: .4rem;
             }
-            .product-desc p{
+            .product-desc h2{
+                display: inline-block;
+                font-size: .9rem;
+                color: #333;
+                text-transform: capitalize;
+                margin-top: .4rem;
+                margin-right: 0.3rem;
+            }
+            .product-desc p {
                 font-size: .8rem;
                 margin-bottom: .4rem;
             }
-            .product-desc a{
-                font-size: .85rem;
-                font-weight: bold;
-                text-decoration: underline;
+            .con{
+                display: flex;
+                justify-content: space-between;
+            }
+            .product-desc span{
+                font-size: 1.3rem;
+                margin: -.31rem 0.3rem;
+                color: var(--mainColor);
+                display: inline-block;
+            }
+            .product-desc button{
+                margin-left: 0.6rem;
+                float: left;
+                border: 2px solid var(--mainColor) !important;
+                border-radius: 0;
+                color: var(--mainColor) !important;
+                text-transform: none;
+                text-align: center;
+                vertical-align: middle;
+                display: inline-block;
+                user-select: none;
+                background-color: transparent;
+                padding: .2rem .5rem;
+                transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                cursor: pointer;
+                width: 100%;
             }
             .is-mobile-menu{
                 padding: 1.5rem 0rem;
@@ -386,7 +420,7 @@
             }
         </style>
         <!--
-                ##to  make image in pc screen##
+                ##----------to  make image in pc screen----------##
 
                 #beside sub-nav
                 .sub-nav,
@@ -432,6 +466,21 @@
                 <div class="hero-image">
                     <img src="{% static 'img/main/pngme.png' %}">
                 </div>
+
+
+
+                ##----------to make add to cart design----------##
+
+                #remove this
+                .product-desc button{
+                    font-size: .8rem;
+                    margin-bottom: .4rem;
+                }
+                .product-desc a{
+                    font-size: .85rem;
+                    font-weight: bold;
+                    text-decoration: underline;
+                }
         -->
     </head>
 <body>
@@ -502,8 +551,14 @@
                         </div>
                         <div class="product-desc">
                             <h3>Privilege title</h3>
+                            <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
                             <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                            <a href="" class="text-main">View details</a>
+                            <div class="con">
+                                <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                      style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                </span>
+                                <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
 
@@ -513,8 +568,14 @@
                         </div>
                         <div class="product-desc">
                             <h3>Privilege title</h3>
+                            <h3 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h3>
                             <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                            <a href="" class="text-main">View details</a>
+                            <div class="con">
+                                <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                      style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                </span>
+                                <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
 
@@ -524,8 +585,14 @@
                         </div>
                         <div class="product-desc">
                             <h3>Privilege title</h3>
+                            <h3 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h3>
                             <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                            <a href="" class="text-main">View details</a>
+                            <div class="con">
+                                <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                      style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                </span>
+                                <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
 
@@ -535,8 +602,14 @@
                         </div>
                         <div class="product-desc">
                             <h3>Privilege title</h3>
+                            <h3 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h3>
                             <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                            <a href="" class="text-main">View details</a>
+                            <div class="con">
+                                <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                      style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                </span>
+                                <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
 
@@ -546,8 +619,14 @@
                         </div>
                         <div class="product-desc">
                             <h3>Privilege title</h3>
+                            <h3 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h3>
                             <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                            <a href="" class="text-main">View details</a>
+                            <div class="con">
+                                <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                      style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                </span>
+                                <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
 
@@ -557,8 +636,14 @@
                         </div>
                         <div class="product-desc">
                             <h3>Privilege title</h3>
+                            <h3 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h3>
                             <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                            <a href="" class="text-main">View details</a>
+                            <div class="con">
+                                <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                      style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                </span>
+                                <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
 
@@ -568,8 +653,14 @@
                         </div>
                         <div class="product-desc">
                             <h3>Privilege title</h3>
+                            <h3 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h3>
                             <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                            <a href="" class="text-main">View details</a>
+                            <div class="con">
+                                <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                      style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                </span>
+                                <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
 
@@ -579,8 +670,14 @@
                         </div>
                         <div class="product-desc">
                             <h3>Privilege title</h3>
+                            <h3 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h3>
                             <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                            <a href="" class="text-main">View details</a>
+                            <div class="con">
+                                <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                      style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                </span>
+                                <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -736,6 +833,7 @@
         </div>
     </div>
 
+    <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js">
     </script>
 </body>
