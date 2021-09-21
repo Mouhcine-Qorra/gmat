@@ -7,7 +7,7 @@ from .views import *
 urlpatterns = [
 	path('', portfolio, name="portfolio"),
 	path('store/', store, name="store"),
-	path('product_details/', product_details, name="product_details"),
+	path('products/', products, name="products"),
 	path('cart/', cart, name="cart"),
 	path('checkout/', checkout, name="checkout"),
 

@@ -23,8 +23,8 @@ from .utils import minfunc
 
 
 
-def product_details(request):
-    return render(request, 'store/product.html')
+def products(request):
+    return render(request, 'store/products.html')
 
 def portfolio(request):
     ip, is_routable = get_client_ip(request)
@@ -32,8 +32,6 @@ def portfolio(request):
     if not ip:
         ip = '0.0.0.0'
     IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
-    print(f'\n\nip:{IP}')
-
     form = PortfolioForm(request.POST or None)
     if request.user.is_authenticated:
         customer = request.user.customer
