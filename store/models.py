@@ -20,7 +20,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100, null=True)
     link = models.CharField(max_length=500, null=True, blank=True, default=uuid.uuid1)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='static/img/products/', null=True, blank=True)
+    image = models.ImageField(upload_to='img/products/', null=True, blank=True)
     date_added = models.DateTimeField('created', auto_now_add=True, null=True, blank=True)
     date_uploaded = models.DateTimeField('modified', auto_now=True, null=True, blank=True)
     def __str__(self):

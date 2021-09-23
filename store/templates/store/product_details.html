@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
         <title>Mouhcin Qorra</title>
         <link rel="icon" type="image/png" href="{% static 'img/main/about.png' %}">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
         <style>
             :root{
@@ -353,15 +353,15 @@
                 margin-bottom: 1rem;
             }
             .variations h4{
-                font-size: .85rem;
+                font-size: 1rem;
                 margin-bottom: .6rem;
+                font-weight: 500;
                 color: #333;
             }
             .product-color input{
                 display: none;
             }
-            .product-color input + span,
-            .product-size input + span{
+            .product-color input + span{
                 display: inline-block;
                 margin-right: .6rem;
                 height: 20px;
@@ -391,22 +391,6 @@
             }
             .product-color:nth-child(5) input + span:after{
                 background: green;
-            }
-            .product-size{
-                font-size: 1.1rem;
-            }
-            .product-size input{
-                display: none;
-            }
-            .product-size input + span{
-                border: 1px solid #505050;
-                height: 16px;
-                width: 16px;
-                margin-left: .5rem;
-            }
-            .product-size input:checked + span{
-                border: 1px solid var(--mainColor);
-                border-width: 2px;
             }
             .product-action-button{
                 display: flex;
@@ -509,6 +493,10 @@
                 font-size: 1.5rem;
                 color: var(--mainColor);
                 margin: 0 1rem;
+            }
+            .form-check-input:checked{
+                background-color: var(--mainColor);
+                border-color: var(--mainColor);
             }
 
             @media only screen and (min-width: 768px){
@@ -650,6 +638,7 @@
                 }
                 .product-description h3{
                     font-size: 1.8rem;
+                    font-weight: 700;
                 }
                 .product-description .price{
                     font-size: 1.6rem;
@@ -821,19 +810,25 @@
                 </div>
 
                 <div class="variations sizes">
-                    <h4>SIZE</h4>
-                    <label for="" class="product-size">S<input type="radio" name="size" checked id="">
-                        <span></span>
-                    </label>
-                    <label for="" class="product-size">M<input type="radio" name="size" id="">
-                        <span></span>
-                    </label>
-                    <label for="" class="product-size">L<input type="radio" name="size" id="">
-                        <span></span>
-                    </label>
-                    <label for="" class="product-size">XL<input type="radio" name="size" id="">
-                        <span></span>
-                    </label>
+                    <h4>GRÖßE</h4>
+                    <div class="mt-1">
+                      <div class="form-check form-check-inline pl-0">
+                        <input type="radio" class="form-check-input" id="small" name="materialExampleRadios"
+                          checked>
+                        <label class="form-check-label small text-uppercase card-link-secondary"
+                          for="small">Klein</label>
+                      </div>
+                      <div class="form-check form-check-inline pl-0">
+                        <input type="radio" class="form-check-input" id="medium" name="materialExampleRadios">
+                        <label class="form-check-label small text-uppercase card-link-secondary"
+                          for="medium">Mittel</label>
+                      </div>
+                      <div class="form-check form-check-inline pl-0">
+                        <input type="radio" class="form-check-input" id="large" name="materialExampleRadios">
+                        <label class="form-check-label small text-uppercase card-link-secondary"
+                          for="large">Groß</label>
+                      </div>
+                    </div>
                 </div>
 
                 <div class="product-action-button large">
@@ -859,11 +854,13 @@
                     <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsumLorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsumLorem ipsum dolor Lorem ipsum dolor </p>
                 </div>
                 <div class="product-action-button small">
-                    <div class="quantity-controls">
-                        <button>-</button>
-                        <input type="number" value="1" readonly>
-                        <button>+</button>
-                    </div>
+
+                                    <div class="quantity-controls">
+                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                                        <input class="quantity"  name="quantity"  type="number" min="0" value="1" readonly>
+                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                                    </div>
+
                     <div class="tocart-control">
                         <button class="btn-main">
                             <span class="ti-shopping-cart"></span>
@@ -1064,6 +1061,7 @@
 
 
     <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js">
     </script>
