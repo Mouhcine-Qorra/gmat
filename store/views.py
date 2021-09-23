@@ -8,7 +8,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import datetime, os, json
-from .filters import ProductFilter
 from .utils import minfunc
 
 
@@ -27,7 +26,10 @@ def product_details(request):
     return render(request, 'store/product_details.html')
 
 def products(request):
-    return render(request, 'store/products.html')
+    data = minfunc(request)
+    total_items = data['total_items']
+    products = Product.objects.all()
+    return render(request, 'store/products.html', {'products': products, 'total_items': total_items})
 
 def portfolio(request):
     ip, is_routable = get_client_ip(request)
@@ -60,14 +62,6 @@ def portfolio(request):
             else:
                 messages.error(request, 'Please fill all required fields')
     return render(request, 'store/portfolio.html', {'var': var})
-
-def store(request):
-    data = minfunc(request)
-    total_items = data['total_items']
-    products = Product.objects.all()
-    myfilter = ProductFilter(request.GET, queryset=products)
-    products = myfilter.qs
-    return render(request, 'store/store.html', {'products': products, 'total_items': total_items, 'filter': myfilter})
 
 def cart(request):
     data = minfunc(request)

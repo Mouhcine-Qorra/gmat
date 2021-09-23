@@ -27,30 +27,34 @@
 				<div style="flex:1"><strong>Total</strong></div>
 				<div style="flex:0.5"></div>
 			</div>
-			{% for item in items %}
-			<div class="cart-row">
-				<div style="flex:2"><img class="row-image" src="{% if item.product.image %}
-																{{ item.product.image.url }}
-																{% else %}
-																{% static 'img/main/default-no-product.png' %}
-																{% endif %}">
-				</div>
-				<div style="flex:2"><p>{{ item.product.name }}</p></div>
-				<div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
-				<div style="flex:1">
-					<p class="quantity">{{ item.quantity }}</p>
-					<div class="quantity">
-						<img data-action="add" data-product="{{ item.product.id }}" class="chg-quantity update-cart" src="{% static 'img/main/up.jpg' %}">
-						<img data-action="remove" data-product="{{ item.product.id }}" class="chg-quantity update-cart" src="{% static 'img/main/down.jpg' %}">
+			{% if items %}
+				{% for item in items %}
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="{% if item.product.image %}
+																	{{ item.product.image.url }}
+																	{% else %}
+																	{% static 'img/main/default-no-product.png' %}
+																	{% endif %}">
+					</div>
+					<div style="flex:2"><p>{{ item.product.name }}</p></div>
+					<div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
+					<div style="flex:1">
+						<p class="quantity">{{ item.quantity }}</p>
+						<div class="quantity">
+							<img data-action="add" data-product="{{ item.product.id }}" class="chg-quantity update-cart" src="{% static 'img/main/up.jpg' %}">
+							<img data-action="remove" data-product="{{ item.product.id }}" class="chg-quantity update-cart" src="{% static 'img/main/down.jpg' %}">
+						</div>
+					</div>
+					<div style="flex:1"><p>${{ item.quantity_price|floatformat:2 }}</p></div>
+					<div style="flex:0.5">
+						<a href="{% url 'delete' item.product.id %}" onclick="return confirm('Deleting this product!')">
+							<img class="chg-quantity2" src="{% static 'img/main/delete.png' %}"></a>
 					</div>
 				</div>
-				<div style="flex:1"><p>${{ item.quantity_price|floatformat:2 }}</p></div>
-				<div style="flex:0.5">
-					<a href="{% url 'delete' item.product.id %}" onclick="return confirm('Deleting this product!')">
-						<img class="chg-quantity2" src="{% static 'img/main/delete.png' %}"></a>
-				</div>
-			</div>
-			{% endfor %}
+				{% endfor %}
+			{% else %}
+				<img style="width:100%" src="{% static 'img/main/empty.png' %}">
+			{% endif %}
 
 		</div>
 	</div>

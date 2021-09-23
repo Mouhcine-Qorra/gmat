@@ -129,13 +129,18 @@
                 margin-left: 1rem;
                 font-weight: bold;
             }
+            .last{
+                text-align: center;
+                padding: 0rem 2rem;
+                margin: .8rem 0rem .2rem 0rem;
+            }
             .best-sellers{
                 padding: 1.5rem 0rem;
             }
             .section-info{
                 text-align: center;
                 padding: 0rem 2rem;
-                margin: 1.2rem 0rem 1.2rem 0rem;
+                margin: 0rem;
             }
             .section-info h3{
                 margin-bottom: .7rem;
@@ -542,6 +547,7 @@
                 .sub-nav-top ul{
                     display: flex;
                     justify-content: center;
+                    margin-bottom: 0rem;
                 }
                 .sub-nav-top li{
                     margin: 0rem 1rem;
@@ -595,9 +601,12 @@
                     padding: 1.3rem;
                 }
                 .training,
-                .feature-section,
-                .mobile-contact-section{
+                .feature-section{
                     padding: 2rem 0rem;
+                    margin-bottom: 1.2rem;
+                }
+                .mobile-contact-section{
+                    padding: 0rem 0rem;
                     margin-bottom: 1.2rem;
                 }
             }
@@ -660,6 +669,10 @@
                 }
                 .quantity-controls{
                     margin-right: -5px;
+                }
+                .product-color input + span:after{
+                    top: 14%;
+                    left: 14%;
                 }
             }
         </style>
@@ -792,7 +805,7 @@
                 </div>
             </div>
             <div class="wrapper product-description">
-                <h3>Sitting room</h3>
+                <h3>Stühle für alle Zimmer</h3>
                 <p><small class="sale bg-main">NEW</small><span class="price text-main">$12.50</span></p>
                 <p class="short-describe">Bla bbn uiib zs hbkaz hbickzini ibhiknihbzicBla bbn uiib zs hbkaz hbickzini ibhiknihbzicBla bbn uiib zs hbkaz hbickzini ibhiknihbzic</p>
                 <div class="variations color">
@@ -1042,10 +1055,9 @@
                 </div>
             </div>
         </section>
-
         <section class="mobile-contact-section bg-secondary">
             <div class="wrapper">
-                <div class="section-info">
+                <div class="last">
                     <h3>Kontakt uns</h3>
                     <div class="footer__social">
                         <a href="https://www.linkedin.com/in/mouhcin-qorra/" class="footer__icon" target=”_blank”><i class="iconify" data-icon="brandico:linkedin-rect" style="font-size: 27px;" ></i></a>
