@@ -8,6 +8,7 @@ urlpatterns = [
 	path('', portfolio, name="portfolio"),
 	path('store/', store, name="store"),
 	path('products/', products, name="products"),
+	path('product_details/', product_details, name="product_details"),
 	path('cart/', cart, name="cart"),
 	path('checkout/', checkout, name="checkout"),
 

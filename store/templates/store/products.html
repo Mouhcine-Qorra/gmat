@@ -4,8 +4,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-        <title>Ecommerce</title>
+        <title>Mouhcin Qorra</title>
+        <link rel="icon" type="image/png" href="{% static 'img/main/about.png' %}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
         <style>
             :root{
                 --mainColor: #e96161;
@@ -131,6 +133,11 @@
                 padding: 0rem 2rem;
                 margin: 1.2rem 0rem 2rem 0rem;
             }
+            .last{
+                text-align: center;
+                padding: 0rem 2rem;
+                margin: .8rem 0rem .2rem 0rem;
+            }
             .section-info h3{
                 margin-bottom: .7rem;
                 color: #333;
@@ -202,7 +209,6 @@
                 text-align: center;
                 vertical-align: middle;
                 display: inline-block;
-                user-select: none;
                 background-color: transparent;
                 padding: .2rem .5rem;
                 transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
@@ -237,37 +243,6 @@
             .features-section{
                 padding-bottom: 1.5rem;
             }
-            .training-articles{
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                grid-gap: 2.5rem;
-            }
-            .training-article{
-                background: #fff;
-                border-radius: 7px;
-            }
-            .train-article-img{
-                height: 230px;
-                margin-bottom: 1rem;
-                display: none;
-            }
-            .train-article-info{
-                padding: 1rem;
-            }
-            .train-article-info h5{
-                font-size: .9rem;
-                color: #505050;
-                margin-bottom: .3rem;
-            }
-            .train-article-info p{
-                font-size: .85rem;
-                color: #555;
-                line-height: 1.1rem;
-                margin-bottom: .7rem;
-            }
-            .train-article-info a{
-                text-decoration: underline;
-            }
             .mobile-contact-section{
                 padding-bottom: .5rem;
             }
@@ -297,26 +272,62 @@
                 font-size: .85rem;
                 color: #505050;
             }
-            .mobile-contact{
-                display: flex;
-                justify-content: space-evenly;
-            }
-            .mobile-contact{
-                margin: .8rem 0rem;
-            }
-            .mobile-contact > div > span{
-                font-size: 0.9rem;
-            }
             .mobile-social-links span{
                 font-size: 1.3rem;
                 margin: 0rem 1.3rem;
                 color: var(--mainColor);
             }
             .footer-bottom{
-                padding: 1rem 0rem 2rem 0rem;
+                padding: 1.4rem 0rem 0rem 0rem;
                 text-align: center;
             }
+            .footer__social{
+                font-size: 3.3rem;
+                margin: 0rem 1.3rem;
+            }
+            .footer__icon{
+                font-size: 1.5rem;
+                color: var(--mainColor);
+                margin: 0 1rem;
+            }
+            .swiper-slide{
+                background-size: cover;
+                background-position: center;
+                border-radius: 3px;
+            }
+            .swiper-slide{
+                width: 25%;
+            }
+            .swiper-slide-thumb-active{
+                opacity: 1;
+            }
+            .similar-products{
+                padding-bottom: 1.5rem;
+            }
+            .similar-products h3{
+                margin-bottom: 1.2rem;
+                color: #333;
+            }
+            .swiper-button-next:after,
+            .swiper-button-prev:after{
+                font-size: .85rem;
+                padding: 1rem;
+                background: #000;
+                color: #fff;
+            }
+            .swiper-button-next,
+            .swiper-button-prev {
+                top: 30%;
+            }
+
+
             @media only screen and (min-width: 768px){
+
+                .swiper-slide{
+                    width: 100%;
+                    height: 25%;
+                }
+
                 .wrapper.full-screen{
                     padding: 0rem;
                 }
@@ -370,20 +381,8 @@
                 .hero{
                     height: 40vh;
                 }
-                .training-articles,
-                .features{
-                    grid-template-columns: repeat(3, 1fr);
-                }
-                .train-article-img{
-                    display: block;
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                }
                 .section-info h3{
                     font-size: 2rem;
-                }
-                .section-info p{
-                    font-size: 1.2rem;
                 }
                 .feature{
                     margin-bottom: 1.3rem;
@@ -394,12 +393,6 @@
                 .mobile-contact-section{
                     padding: 2rem 0rem;
                     margin-bottom: 1.2rem;
-                }
-                .mobile-contact{
-                    justify-content: center;
-                }
-                .mobile-contact > div{
-                    margin: 0rem 1rem;
                 }
             }
             @media only screen and (min-width:1124px){
@@ -492,7 +485,7 @@
                     </div>
 
                     <div class="brand">
-                        <h2>Shopname</h2>
+                        <h2>Mouhcin</h2>
                     </div>
 
                     <div class="cart">
@@ -518,7 +511,7 @@
                 <div class="wrapper">
                     <div class="sub-nav-bottom-links">
                         <a href="">Free shipping</a>  |
-                        <a href="">Fast delivery</a>  |
+                        <a href="">High Quality</a>  |
                         <a href="">Free returns</a>
                     </div>
                 </div>
@@ -532,14 +525,14 @@
                     <h4>der <span class="text-mainn">Laden</span><br> der Zukunft</h4>
                     <p><br><br></p>
                     <div class="hero-action-btn">
-                        <a href="" class="btn-main">Shop now</a>
-                        <a href="" class="btn-secondary-outline">Free advice</a>
+                        <a href="#bestsellers" class="btn-main">Shop now</a>
+                        <a href="#Features" class="btn-secondary-outline">Features</a>
                     </div>
                 </div>
             </section>
         </div>
         <div class="wrapper">
-            <section class="best-sellers">
+            <section class="best-sellers" id="bestsellers">
                 <div class="section-info">
                     <h3>Best Sellers</h3>
                     <p>Unsere beliebtesten Produkte, basierend auf Bestellungen, Stündlich aktualisiert.</p>
@@ -683,46 +676,123 @@
                 </div>
             </section>
         </div>
-        <section class="training bg-secondary">
+        <section class="bg-secondary">
             <div class="wrapper">
-                <div class="section-info">
-                    <h3>Need some Training?</h3>
-                    <p>Unsere beliebtesten Produkte, basierend auf Bestellungen. Stündlich aktualisiert.</p>
+                <div class="similar-products">
+                    <h3>Trend Produkte</h3>
+
+                    <!-- Swiper -->
+                    <div class="swiper similar-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="product">
+                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
+                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
+                                    </div>
+                                    <div class="product-desc">
+                                        <h3>Privilege title</h3>
+                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
+                                        <div class="con">
+                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                            </span>
+                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="product">
+                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
+                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
+                                    </div>
+                                    <div class="product-desc">
+                                        <h3>Privilege title</h3>
+                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
+                                        <div class="con">
+                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                            </span>
+                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="product">
+                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
+                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
+                                    </div>
+                                    <div class="product-desc">
+                                        <h3>Privilege title</h3>
+                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
+                                        <div class="con">
+                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                            </span>
+                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="product">
+                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
+                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
+                                    </div>
+                                    <div class="product-desc">
+                                        <h3>Privilege title</h3>
+                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
+                                        <div class="con">
+                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                            </span>
+                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <div class="product">
+                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
+                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
+                                    </div>
+                                    <div class="product-desc">
+                                        <h3>Privilege title</h3>
+                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
+                                        <div class="con">
+                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                            </span>
+                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
                 </div>
-                <div class="training-articles">
-                    <div class="training-article">
-                        <div class="train-article-img" style="background-image:url('{% static 'img/products/S20.jpg' %}')"></div>
-                        <div class="train-article-info">
-                            <h5>Why do i need tu use skin...</h5>
-                            <p>Unsere beliebtesten Produkte, basierendUnsere beliebtesten Produkte, basierend</p>
-                            <a href="" class="text-main">Learn more</a>
-                        </div>
-                    </div>
-                    <div class="training-article">
-                        <div class="train-article-img" style="background-image:url('{% static 'img/products/S20.jpg' %}')"></div>
-                        <div class="train-article-info">
-                            <h5>Why do i need tu use skin...</h5>
-                            <p>Unsere beliebtesten Produkte, basierendUnsere beliebtesten Produkte, basierend</p>
-                            <a href="" class="text-main">Learn more</a>
-                        </div>
-                    </div>
-                    <div class="training-article">
-                        <div class="train-article-img" style="background-image:url('{% static 'img/products/S20.jpg' %}')"></div>
-                        <div class="train-article-info">
-                            <h5>Why do i need tu use skin...</h5>
-                            <p>Unsere beliebtesten Produkte, basierendUnsere beliebtesten Produkte, basierend</p>
-                            <a href="" class="text-main">Learn more</a>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </section>
 
-        <section class="features-section bg-white">
+        <section class="features-section bg-white" id="Features">
             <div class="wrapper">
                 <div class="section-info">
-                    <h3>Amazing Features</h3>
-                    <p>Unsere beliebtesten Produkte</p>
+                    <h3>Erstaunlich Features</h3>
+                    <p>Wir machen Alles für Ihren Komfort!</p>
                 </div>
                 <div class="features">
                     <div class="feature">
@@ -785,33 +855,21 @@
 
         <section class="mobile-contact-section bg-secondary">
             <div class="wrapper">
-                <div class="section-info">
-                    <h3>Contact  Us</h3>
-                    <div class="mobile-contact">
-                        <div class="mobile-phone">
-                            <span class="ti-mobile"></span>
-                            <span>+212641208175</span>
-                        </div>
-                        <div class="mobile-mail">
-                            <span class="ti-email"></span>
-                            <span>qorra.mouhcine1@gmail.com</span>
-                        </div>
+                <div class="last">
+                    <h3>Kontakt uns</h3>
+                    <div class="footer__social">
+                        <a href="https://www.linkedin.com/in/mouhcin-qorra/" class="footer__icon" target=”_blank”><i class="iconify" data-icon="brandico:linkedin-rect" style="font-size: 27px;" ></i></a>
+                        <a href="mailto:qorra.mouhcine1@gmail.com" class="footer__icon" target=”_blank”><i class="bx iconify" data-icon='simple-icons:gmail' data-height="28"></i></a>
+                        <a href='https://wa.me/212641208175' class="footer__icon" target='_blank'><i class="iconify" data-icon="akar-icons:whatsapp-fill" style="font-size: 27px;"></i></a>
                     </div>
-                    <div class="mobile-social-links">
-                        <span class="ti-linkedin"></span>
-                        <span class="ti-instagram"></span>
-                        <span class="ti-facebook"></span>
+                    <div class="footer-bottom">
+                        <small>Shopname 2022 &copy; Entwickelt von </small><h5>Mouhcin Qorra.</h5>
                     </div>
                 </div>
 
             </div>
         </section>
     </main>
-    <footer>
-        <div class="footer-bottom">
-            <small>&copy; All rights reserved. Shopname 2022</small>
-        </div>
-    </footer>
     <div class="is-mobile-menu"></div>
 
     <div class="mobile-menu">
@@ -833,7 +891,41 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js">
+    </script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        /* SLIDES */
+
+        let similarProducts = new Swiper('.similar-swiper',{
+            spaceBetween: 20,
+            slidesPerView: 2,
+            breakpoints: {
+                768: {
+                    slidesPerView: 3,
+                }
+            },
+            navigation:{
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        })
+
+
+        /*SMOOTH SCROLL HOME*/
+
+        let anchorSelector = 'a[href^="#"]';
+        let anchorList = document.querySelectorAll(anchorSelector);
+        anchorList.forEach(link => {
+            link.onclick = function (e) {
+                e.preventDefault();
+                let destination = document.querySelector(this.hash);
+                destination.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
     </script>
 </body>

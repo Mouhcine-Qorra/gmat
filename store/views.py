@@ -23,6 +23,9 @@ from .utils import minfunc
 
 
 
+def product_details(request):
+    return render(request, 'store/product_details.html')
+
 def products(request):
     return render(request, 'store/products.html')
 
