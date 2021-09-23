@@ -498,6 +498,9 @@
                 background-color: var(--mainColor);
                 border-color: var(--mainColor);
             }
+            #droit{
+                margin-left: 9px;
+            }
 
             @media only screen and (min-width: 768px){
                 .wrapper.full-screen{
@@ -655,6 +658,9 @@
                 .swiper.gallery-thumbs{
                     width: 140%;
                 }
+                .quantity-controls{
+                    margin-right: -5px;
+                }
             }
         </style>
         <!--
@@ -791,20 +797,20 @@
                 <p class="short-describe">Bla bbn uiib zs hbkaz hbickzini ibhiknihbzicBla bbn uiib zs hbkaz hbickzini ibhiknihbzicBla bbn uiib zs hbkaz hbickzini ibhiknihbzic</p>
                 <div class="variations color">
                     <h4>COLOR</h4>
-                    <label for="" class="product-color">
-                        <input type="radio" checked name="color" id="">
+                    <label class="product-color">
+                        <input type="radio" checked name="color">
                         <span></span>
                     </label>
-                    <label for="" class="product-color">
-                        <input type="radio" name="color" id="">
+                    <label class="product-color">
+                        <input type="radio" name="color">
                         <span></span>
                     </label>
-                    <label for="" class="product-color">
-                        <input type="radio" name="color" id="">
+                    <label class="product-color">
+                        <input type="radio" name="color">
                         <span></span>
                     </label>
-                    <label for="" class="product-color">
-                        <input type="radio" name="color" id="">
+                    <label class="product-color">
+                        <input type="radio" name="color">
                         <span></span>
                     </label>
                 </div>
@@ -833,9 +839,9 @@
 
                 <div class="product-action-button large">
                     <div class="quantity-controls">
-                        <button>-</button>
-                        <input type="number" value="1" readonly>
-                        <button>+</button>
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                        <input class="quantity"  name="quantity" id="droit"  type="number" min="0" value="1" readonly>
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
                     </div>
                     <div class="tocart-control">
                         <button class="btn-main">
@@ -854,13 +860,11 @@
                     <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsumLorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsumLorem ipsum dolor Lorem ipsum dolor </p>
                 </div>
                 <div class="product-action-button small">
-
-                                    <div class="quantity-controls">
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                                        <input class="quantity"  name="quantity"  type="number" min="0" value="1" readonly>
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
-                                    </div>
-
+                    <div class="quantity-controls">
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                        <input class="quantity"  name="quantity"  type="number" min="0" value="1" readonly>
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                    </div>
                     <div class="tocart-control">
                         <button class="btn-main">
                             <span class="ti-shopping-cart"></span>
