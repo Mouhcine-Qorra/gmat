@@ -226,7 +226,7 @@
                 width: 100%;
                 background: #fff;
                 display: grid;
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(3, 1fr);
                 padding: .7rem 0rem;
                 z-index: 10;
                 box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
@@ -506,6 +506,10 @@
             #droit{
                 margin-left: 9px;
             }
+            .brand{
+                color: #333;
+                text-decoration: unset;
+            }
 
             @media only screen and (min-width: 768px){
                 .wrapper.full-screen{
@@ -748,13 +752,13 @@
                         <span class="ti-search"></span>
                     </div>
 
-                    <div class="brand">
-                        <h2>Mouhcin</h2>
+                    <div>
+                        <a href="{% url 'store' %}" class="brand"><h2>Mouhcin</h2></a>
                     </div>
 
                     <div class="cart">
-                        <span class="ti-shopping-cart"></span>
-                        <span class="cart-count"><span class="text-main">0</span></span>
+                        <span class="ti-shopping-cart" style="color: var(--mainColor);"></span>
+                        <span class="cart-count"><span class="text-main">{{ total_items }}</span></span>
                     </div>
             </nav>
         </div>
@@ -806,7 +810,7 @@
             </div>
             <div class="wrapper product-description">
                 <h3>Stühle für alle Zimmer</h3>
-                <p><small class="sale bg-main">NEW</small><span class="price text-main">$12.50</span></p>
+                <p><small class="sale bg-main">NEW</small><span class="price text-main">€12.50</span></p>
                 <p class="short-describe">Bla bbn uiib zs hbkaz hbickzini ibhiknihbzicBla bbn uiib zs hbkaz hbickzini ibhiknihbzicBla bbn uiib zs hbkaz hbickzini ibhiknihbzic</p>
                 <div class="variations color">
                     <h4>COLOR</h4>
@@ -891,7 +895,7 @@
         <section>
             <div class="wrapper">
                 <div class="similar-products">
-                    <h3>SIMILAR PRODUCTS</h3>
+                    <h3>Empfehlungen für Sie</h3>
 
                     <!-- Swiper -->
                     <div class="swiper similar-swiper">
@@ -903,7 +907,7 @@
                                     </div>
                                     <div class="product-desc">
                                         <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
                                         <p>Lorem ipduojoedo jnjdenod jniedz</p>
                                         <div class="con">
                                             <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
@@ -922,7 +926,7 @@
                                     </div>
                                     <div class="product-desc">
                                         <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
                                         <p>Lorem ipduojoedo jnjdenod jniedz</p>
                                         <div class="con">
                                             <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
@@ -941,7 +945,7 @@
                                     </div>
                                     <div class="product-desc">
                                         <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
                                         <p>Lorem ipduojoedo jnjdenod jniedz</p>
                                         <div class="con">
                                             <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
@@ -960,7 +964,7 @@
                                     </div>
                                     <div class="product-desc">
                                         <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
                                         <p>Lorem ipduojoedo jnjdenod jniedz</p>
                                         <div class="con">
                                             <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
@@ -979,7 +983,7 @@
                                     </div>
                                     <div class="product-desc">
                                         <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
                                         <p>Lorem ipduojoedo jnjdenod jniedz</p>
                                         <div class="con">
                                             <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
@@ -998,7 +1002,7 @@
                                     </div>
                                     <div class="product-desc">
                                         <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
                                         <p>Lorem ipduojoedo jnjdenod jniedz</p>
                                         <div class="con">
                                             <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
@@ -1017,7 +1021,7 @@
                                     </div>
                                     <div class="product-desc">
                                         <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
                                         <p>Lorem ipduojoedo jnjdenod jniedz</p>
                                         <div class="con">
                                             <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
@@ -1036,7 +1040,7 @@
                                     </div>
                                     <div class="product-desc">
                                         <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
+                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
                                         <p>Lorem ipduojoedo jnjdenod jniedz</p>
                                         <div class="con">
                                             <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
@@ -1061,7 +1065,7 @@
                     <h3>Kontakt uns</h3>
                     <div class="footer__social">
                         <a href="https://www.linkedin.com/in/mouhcin-qorra/" class="footer__icon" target=”_blank”><i class="iconify" data-icon="brandico:linkedin-rect" style="font-size: 27px;" ></i></a>
-                        <a href="mailto:qorra.mouhcine1@gmail.com" class="footer__icon" target=”_blank”><i class="bx iconify" data-icon='simple-icons:gmail' data-height="28"></i></a>
+                        <a href="mailto:qorra.mouhcine1@gmail.com" class="footer__icon"><i class="bx iconify" data-icon='simple-icons:gmail' data-height="28"></i></a>
                         <a href='https://wa.me/212641208175' class="footer__icon" target='_blank'><i class="iconify" data-icon="akar-icons:whatsapp-fill" style="font-size: 27px;"></i></a>
                     </div>
                     <div class="footer-bottom">

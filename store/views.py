@@ -23,13 +23,16 @@ from .utils import minfunc
 
 
 def product_details(request):
-    return render(request, 'store/product_details.html')
+    data = minfunc(request)
+    total_items = data['total_items']
+    return render(request, 'store/product_details.html', {'total_items': total_items})
 
 def products(request):
     data = minfunc(request)
     total_items = data['total_items']
-    products = Product.objects.all()
-    return render(request, 'store/products.html', {'products': products, 'total_items': total_items})
+    products = Product.objects.all()[:8]
+    similar_products = Product.objects.all()[8:]
+    return render(request, 'store/products.html', {'products': products, 'total_items': total_items, 'similar_products': similar_products})
 
 def portfolio(request):
     ip, is_routable = get_client_ip(request)

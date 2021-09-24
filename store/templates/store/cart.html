@@ -1,63 +1,80 @@
-{% extends 'store/main.html' %}
+{% extends 'store/products.html' %}
 {% load static %}
 {% block content %}
-<div class="row">
-	<div class="col-lg-12">
-		<div class="box-element">
-			<a  class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
-			<br>
-			<br>
-			<table class="table">
-				<tr>
-					<th><h5>Items: <strong>{{ total_items }}</strong></h5></th>
-					<th><h5><strong>Total : ${{ total|floatformat:2 }}</strong></h5></th>
-					<th>
-						<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
-					</th>
-				</tr>
-			</table>
-		</div>
-		<br>
-		<div class="box-element">
-			<div class="cart-row">
-				<div style="flex:2"></div>
-				<div style="flex:2"><strong>Item</strong></div>
-				<div style="flex:1"><strong>Price</strong></div>
-				<div style="flex:1"><strong>Quantity</strong></div>
-				<div style="flex:1"><strong>Total</strong></div>
-				<div style="flex:0.5"></div>
-			</div>
-			{% if items %}
-				{% for item in items %}
-				<div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="{% if item.product.image %}
-																	{{ item.product.image.url }}
-																	{% else %}
-																	{% static 'img/main/default-no-product.png' %}
-																	{% endif %}">
-					</div>
-					<div style="flex:2"><p>{{ item.product.name }}</p></div>
-					<div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
-					<div style="flex:1">
-						<p class="quantity">{{ item.quantity }}</p>
-						<div class="quantity">
-							<img data-action="add" data-product="{{ item.product.id }}" class="chg-quantity update-cart" src="{% static 'img/main/up.jpg' %}">
-							<img data-action="remove" data-product="{{ item.product.id }}" class="chg-quantity update-cart" src="{% static 'img/main/down.jpg' %}">
-						</div>
-					</div>
-					<div style="flex:1"><p>${{ item.quantity_price|floatformat:2 }}</p></div>
-					<div style="flex:0.5">
-						<a href="{% url 'delete' item.product.id %}" onclick="return confirm('Deleting this product!')">
-							<img class="chg-quantity2" src="{% static 'img/main/delete.png' %}"></a>
-					</div>
-				</div>
-				{% endfor %}
-			{% else %}
-				<img style="width:100%" src="{% static 'img/main/empty.png' %}">
-			{% endif %}
+			<div class="product-cart">
+				<h4 class="page-banner-sm">Cart</h4>
+				<div class="wrapper">
 
-		</div>
-	</div>
-</div>
+					<div class="cart-collection">
+						<div class="cart-header">
+							<p>Item</p>
+							<p>Quantity</p>
+							<p>Unit price</p>
+							<p>Total</p>
+						</div>
+						{% if items %}
+							{% for item in items %}
+								<div class="cart-item">
+									<form action="">
+										<div class="cart-product">
+											<div class="cart-image" style="background-image: url('{{ item.product.image.url }}');"></div>
+											<div class="cart-product-info">
+												<p class="cart-product-name">{{ item.product.name }}</p>
+												<p class="cart-price-sm">€{{ item.product.price|floatformat:2 }}</p>
+												<small>x 1</small>
+											</div>
+										</div>
+										<div class="cart-quantity-md">
+											<div class="cart-quantity-controls">
+												<button data-action="remove" data-product="{{ item.product.id }}" class="update-cart" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+												<input class="quantity"  name="quantity"  type="number" min="0" value="{{ item.quantity }}" readonly>
+												<button data-action="add" data-product="{{ item.product.id }}" class="update-cart" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+											</div>
+										</div>
+										<div class="cart-unit-price">
+											<h4>€{{ item.product.price|floatformat:2 }}</h4>
+										</div>
+										<div class="cart-product-total">
+											<h4>€{{ item.quantity_price|floatformat:2 }}</h4>
+										</div>
+										<div class="cart-controls-sm">
+											<div class="remove">
+												<a href="{% url 'delete' item.product.id %}" onclick="return confirm('Deleting this product!')" style="color:#333">
+													<span class="ti-trash"></span> Remove
+												</a>
+											</div>
+											<div class="cart-quantity-controls-sm">
+												<button>-</button>
+												<input type="number" value="1" readonly >
+												<button>+</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							{% endfor %}
+						{% else %}
+							<img style="width:100%" src="{% static 'img/main/empty.png' %}">
+						{% endif %}
+					</div>
+
+					{% if items %}
+						<div class="cart-total-holder">
+							<div class="cart-total">
+								<p>Total: </p>
+								<p>€{{ total|floatformat:2 }}</p>
+							</div>
+							<div class="cart-action-button">
+								<a href="">&#x2190; Continue shopping</a>
+								<a href="" class="btn-main">Proceed to checkout &#x2192;</a>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			{% if total_items == 1 %}
+			<div class="one-item">
+				<br><br><br><br><br>
+			</div>
+			{% endif %}
 
 {% endblock %}

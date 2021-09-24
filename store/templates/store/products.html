@@ -41,8 +41,13 @@
                 list-style-type: none;
                 font-family: 'GT Walsheim Pro', sans-serif;
             }
-            .wrapper {
+            .wrapper{
                 padding: 1rem;
+            }
+            @media only screen and (max-width: 420px){
+                .maxpadding {
+                    padding-left: 0.1rem;
+                }
             }
             .bg-white{
                 background: #fff !important;
@@ -246,7 +251,7 @@
                 width: 100%;
                 background: #fff;
                 display: grid;
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(3, 1fr);
                 padding: .7rem 0rem;
                 z-index: 10;
                 box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
@@ -342,14 +347,171 @@
                 top: 30%;
             }
 
+            /* Cart */
+            .product-cart{
+                margin-top: 4rem;
+            }
+            .page-banner-sm{
+                font-size: 1.2rem;
+                color: #333;
+                background: var(--greyColor);
+                padding: 1rem;
+            }
+            .cart-collection{
+                margin-top: 0rem;
+            }
+            .cart-item form{
+                display: grid;
+                grid-template-columns: 100%;
+                border-bottom: 1px solid #efefef;
+                margin-bottom: 1.2rem;
+                border-radius: 7px 7px 0px 0px;
+                box-shadow: inset 2px 2px 2px rgba(0,0,0,0.2),
+                            inset -2px -2px 2px #efefef;
+            }
+            .cart-product{
+                display: grid;
+                grid-template-columns: 80px auto;
+                grid-gap: 0rem 1.3rem;
+                padding: 1rem .5rem;
+                border: 1px solid #efefef;
+            }
+            .cart-image{
+                 height: 75px;
+                 border-radius: 7px;
+                 background-size: cover;
+                 background-repeat: no-repeat;
+            }
+            .cart-quantity-md,
+            .cart-unit-price,
+            .cart-product-total{
+                display: none;
+            }
+            .cart-controls-sm{
+                display: flex;
+                justify-content: space-between;
+                padding: .5rem .8rem;
+            }
+            .remove{
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #505050;
+            }
+            .cart-quantity-controls-sm,
+            .cart-quantity-controls{
+                display: flex;
+            }
+            .cart-quantity-controls-sm button,
+            .cart-quantity-controls-sm input,
+            .cart-quantity-controls button,
+            .cart-quantity-controls input{
+                height: 25px;
+                width: 25px;
+                border: none;
+                outline: none;
+                text-align: center;
+                font-weight: bold;
+                font-size: 1.1rem;
+                color: #505050;
+                margin-left: .3rem;
+            }
+            .cart-quantity-controls-sm button,
+            .cart-quantity-controls button{
+                background: var(--mainColor);
+                color: #fff;
+                border-radius: 50%;
+            }
+            .cart-product-name{
+                font-weight: bold;
+                color: #505050;
+                margin-bottom: .3rem;
+            }
+            .cart-price-sm{
+                color: var(--mainColor);
+                font-weight: bold;
+                margin-bottom: .3rem;
+            }
+            .cart-product-info small{
+                font-weight: bold;
+                color: #333;
+            }
+            .cart-total-holder{
+                margin-top: 2rem;
+            }
+            .cart-total{
+                margin-bottom: 1rem;
+                display: flex;
+                justify-content: space-between;
+            }
+            .cart-total p{
+                font-weight: 800;
+            }
+            .cart-action-button{
+                display: flex;
+                flex-direction: column;
+            }
+            .cart-action-button a{
+                display: block;
+                text-align: center;
+                padding: .7rem;
+                margin-bottom: .5rem;
+            }
+            .cart-action-button a:first-child{
+                order: 1;
+                background: #ffffff;
+                color: #333;
+                border: 1px solid;
+            }
+            .cart-header{
+                display: none;
+            }
+            .brand{
+                color: #333;
+                text-decoration: unset;
+            }
+            .quantity-controls{
+                display: flex;
+                border: 1px solid #ccc;
+            }
+            .quantity-controls button,
+            .quantity-controls input{
+                width: 35px;
+                height: 38px;
+                border: none;
+                outline: none;
+                background: none;
+                font-size: 1.1rem;
+                text-align: center;
+                font-weight: bold;
+                color: #505050;
+            }
+            .quantity-controls button:first-child{
+                border-right: 2px solid #ccc;
+                font-size: 1.4rem;
+            }
+            .quantity-controls button:last-child{
+                border-left: 2px solid #ccc;
+                font-size: 1.4rem;
+            }
+            .one-item{
+                display: none;
+            }
+
 
             @media only screen and (min-width: 768px){
 
+                .cart-action-button a:first-child{
+                    order: 0;
+                    background: #ffffff;
+                    margin-right: .5rem;
+                }
+                .one-item{
+                    display: block;
+                }
                 .swiper-slide{
                     width: 100%;
                     height: 25%;
                 }
-
                 .wrapper.full-screen{
                     padding: 0rem;
                 }
@@ -398,6 +560,77 @@
                 .mobile-menu{
                     display: none;
                 }
+                .cart-quantity-md,
+                .cart-unit-price,
+                .cart-product-total{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 20%;
+                }
+                .cart-item form:first-child{
+                    border-top: 1px solid #efefef;
+                }
+                .cart-item form{
+                    box-shadow: none;
+                    border: none;
+                    display: flex;
+                    border-bottom: 1px solid #efefef;
+                }
+                .cart-controls-sm{
+                    display: none;
+                }
+                .cart-product{
+                    border: none;
+                    flex: 1;
+                    align-items: center;
+                }
+                .cart-product small{
+                    display: none;
+                }
+                .product-cart{
+                    margin-top: 0rem;
+                    padding-bottom: 2rem;
+                }
+                .cart-collection{
+                    margin-top: 1rem;
+                }
+                .cart-header{
+                    display: flex;
+                    padding: 1rem 0rem;
+                }
+                .cart-header p{
+                    font-weight: bold;
+                    color: #505050;
+                    width: 15%;
+                    text-align: center;
+                    margin-right: 4%;
+                }
+                .cart-header p:first-child{
+                    width: auto;
+                    flex: 1;
+                    text-align: left;
+                    margin-left: 1.5%;
+                }
+                .cart-total,
+                .cart-action-button{
+                    justify-content: flex-end;
+                    flex-direction: row;
+                }
+                .cart-total{
+                    margin-right: 7%;
+                }
+                .cart-total p:first-child{
+                    margin-right: 2rem;
+                }
+                .cart-action-button a{
+                    padding-right: 3rem;
+                    padding-left: 3rem;
+                }
+                .cart-action-button{
+                    margin-right: 6.7%;
+                    order: 1;
+                }
             }
 
             @media only screen and (min-width: 960px){
@@ -420,11 +653,17 @@
                     padding: 2rem 0rem;
                     margin-bottom: 1.2rem;
                 }
+                .page-banner-sm{
+                    display: none;
+                }
             }
             @media only screen and (min-width:1124px){
                 .wrapper{
                     width: 70%;
                     margin: auto;
+                }
+                .product-img{
+                    height: 185px;
                 }
                 .wrapper.full-screen{
                     width: 100%;
@@ -435,6 +674,9 @@
                 }
                 .product-grid{
                     grid-template-columns: repeat(4, 1fr);
+                }
+                .quantity-controls{
+                    margin-right: -5px;
                 }
             }
         </style>
@@ -510,12 +752,12 @@
                         <span class="ti-search"></span>
                     </div>
 
-                    <div class="brand">
-                        <h2>Mouhcin</h2>
+                    <div>
+                        <a href="{% url 'store' %}" class="brand"><h2>Mouhcin</h2></a>
                     </div>
 
                     <div class="cart">
-                        <a href="{% url 'cart' %}"><span class="ti-shopping-cart"></span>
+                        <a href="{% url 'cart' %}" style="color: var(--mainColor);"><span class="ti-shopping-cart"></span>
                         <span class="cart-count"><span class="text-main">{{ total_items }}</span></span></a>
                     </div>
             </nav>
@@ -525,11 +767,10 @@
             <div class="sub-nav-top">
                 <div class="wrapper">
                     <ul>
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Track</a></li>
-                        <li><a href="">Order</a></li>
-                        <li><a href="">Contact</a></li>
-                        <li><a href="">About</a></li>
+                        <li><a href="{% url 'store' %}">Home</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="mailto:qorra.mouhcine1@gmail.com">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -547,6 +788,7 @@
 
 
     <main>
+        {% block content %}
         <div class="wrapper full-screen hero-bg" style="background-image: url('{% static 'img/main/moshed.jpg' %}');background-size:cover;background-repeat:no-repeat">
             <section class="hero">
                 <div class="content-hero">
@@ -577,7 +819,7 @@
                             <div class="product-desc">
                                 <a href="{% url 'product_details' %}">
                                     <h3>{{ product.name }}</h3>
-                                    <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}</strong></h2>
+                                    <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}</strong></h2>
                                     <p>Lorem ipduojoedo jnjdenod jniedz</p>
                                 </a>
                                 <div data-product="{{ product.id }}" data-action="add" class="con update-cart">
@@ -601,100 +843,30 @@
                     <!-- Swiper -->
                     <div class="swiper similar-swiper">
                         <div class="swiper-wrapper">
+                            {% for product in similar_products %}
                             <div class="swiper-slide">
                                 <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
+                                    <a href="{% url 'product_details' %}">
+                                        <div class="product-img" style="background-image: url('{{ product.image.url }}')">
+                                            <div class="sale-badge"><span class="spanii">NEW</span></div>
+                                        </div>
+                                    </a>
                                     <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
+                                        <a href="{% url 'product_details' %}">
+                                            <h3>{{ product.name }}</h3>
+                                            <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}</strong></h2>
+                                            <p>Lorem ipduojoedo jnjdenod jniedz</p>
+                                        </a>
+                                        <div data-product="{{ product.id }}" data-action="add" class="con update-cart">
                                             <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
                                                   style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
                                             </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                                            <button>Add to Cart</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
 
                         </div>
                         <div class="swiper-button-prev"></div>
@@ -705,7 +877,7 @@
         </section>
 
         <section class="features-section bg-white" id="Features">
-            <div class="wrapper">
+            <div class="wrapper maxpadding">
                 <div class="section-info">
                     <h3>Erstaunlich Features</h3>
                     <p>Wir machen Alles für Ihren Komfort!</p>
@@ -768,6 +940,7 @@
                 </div>
             </div>
         </section>
+        {% endblock %}
 
         <section class="mobile-contact-section bg-secondary">
             <div class="wrapper">
@@ -775,7 +948,7 @@
                     <h3>Kontakt uns</h3>
                     <div class="footer__social">
                         <a href="https://www.linkedin.com/in/mouhcin-qorra/" class="footer__icon" target=”_blank”><i class="iconify" data-icon="brandico:linkedin-rect" style="font-size: 27px;" ></i></a>
-                        <a href="mailto:qorra.mouhcine1@gmail.com" class="footer__icon" target=”_blank”><i class="bx iconify" data-icon='simple-icons:gmail' data-height="28"></i></a>
+                        <a href="mailto:qorra.mouhcine1@gmail.com" class="footer__icon"><i class="bx iconify" data-icon='simple-icons:gmail' data-height="28"></i></a>
                         <a href='https://wa.me/212641208175' class="footer__icon" target='_blank'><i class="iconify" data-icon="akar-icons:whatsapp-fill" style="font-size: 27px;"></i></a>
                     </div>
                     <div class="footer-bottom">
@@ -791,20 +964,22 @@
     <div class="is-mobile-menu"></div>
     <div class="mobile-menu">
         <div class="menu-item">
-            <span class="ti-home"></span>
-            <p>Home</p>
+            <a href="{% url 'store' %}" style="color:#333">
+                <span class="ti-home"></span>
+                <p>Home</p>
+            </a>
         </div>
         <div class="menu-item">
-            <span class="ti-folder"></span>
-            <p>Products</p>
+            <a href="{% url 'register' %}" style="color:#333">
+                <span class="ti-user"></span>
+                <p>Account</p>
+            </a>
         </div>
         <div class="menu-item">
-            <span class="ti-user"></span>
-            <p>Account</p>
-        </div>
-        <div class="menu-item">
-            <span class="ti-info"></span>
-            <p>Help</p>
+            <a href="mailto:qorra.mouhcine1@gmail.com" style="color:#333">
+                <span class="ti-info"></span>
+                <p>Kontakt</p>
+            </a>
         </div>
     </div>
 
@@ -825,6 +1000,11 @@
             breakpoints: {
                 768: {
                     slidesPerView: 3,
+                }
+            },
+            breakpoints: {
+                1124: {
+                    slidesPerView: 4,
                 }
             },
             navigation:{
