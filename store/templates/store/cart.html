@@ -44,9 +44,9 @@
 												</a>
 											</div>
 											<div class="cart-quantity-controls-sm">
-												<button>-</button>
-												<input type="number" value="1" readonly >
-												<button>+</button>
+												<button data-action="remove" data-product="{{ item.product.id }}" class="update-cart" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+												<input class="quantity"  name="quantity"  type="number" min="0" value="{{ item.quantity }}" readonly>
+												<button data-action="add" data-product="{{ item.product.id }}" class="update-cart" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
 											</div>
 										</div>
 									</form>
