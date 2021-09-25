@@ -1,7 +1,7 @@
 from django.contrib import admin
-from django.utils.safestring import mark_safe
-
 from .models import *
+
+
 
 
 class CustomerAdmin(admin.ModelAdmin):
@@ -10,6 +10,10 @@ class CustomerAdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('title', 'name', 'price', 'image', 'date_added', 'date_uploaded')
+    readonly_fields = ["date_added", "date_uploaded"]
+
+class ProductImagesAdmin(admin.ModelAdmin):
+    list_display = ('product', 'images', 'date_added', 'date_uploaded')
     readonly_fields = ["date_added", "date_uploaded"]
 
 class OrderAdmin(admin.ModelAdmin):
@@ -30,6 +34,7 @@ class PortfolioAdmin(admin.ModelAdmin):
 
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(ProductImage, ProductImagesAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem, ItemAdmin)
 admin.site.register(ShippingAdress, ShippingAdmin)

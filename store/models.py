@@ -31,6 +31,16 @@ class Product(models.Model):
         super(Product, self).save(*args, **kwargs)
 
 
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    images = models.FileField(upload_to='img/products/second', null=True, blank=True)
+    date_added = models.DateTimeField('created', auto_now_add=True, null=True, blank=True)
+    date_uploaded = models.DateTimeField('modified', auto_now=True, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.product.name)
+
+
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)

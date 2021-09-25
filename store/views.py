@@ -28,10 +28,15 @@ def product_details(request, slug):
 
     product = Product.objects.get(link=slug)
     products = Product.objects.all()
+    prd_images = ProductImage.objects.filter(product=product)
+    for i in prd_images:
+        print(i.images.url)
     empfehlungen = random.sample(list(products), 10)
     if product in empfehlungen:
         empfehlungen.remove(product)
-    return render(request, 'store/product_details.html', {'total_items': total_items, 'empfehlungen': empfehlungen, 'product': product})
+    print(empfehlungen)
+    return render(request, 'store/product_details.html',
+                  {'total_items': total_items, 'empfehlungen': empfehlungen, 'product': product, 'prd_images': prd_images})
 
 def products(request):
     data = minfunc(request)
