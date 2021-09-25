@@ -893,21 +893,19 @@
                     </div>
                 </div>
 
-                <form method="post" action="{% url 'product_details' product.link %}">
-                    {% csrf_token %}
                     <div class="product-action-button large">
                         <div class="quantity-controls">
                             <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                            <input class="quantity"  name="quantityy"  type="number" min="0" value="1" readonly>
-                            <button class="update-cart" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>                        </div>
+                            <input class="quantity"  name="quantity"  type="number" min="0" value="1" readonly>
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                        </div>
                         <div data-product="{{ product.id }}" data-action="add" class="tocart-control update-cart">
-                            <button class="btn-main" type="submit">
+                            <button class="btn-main">
                                 <span class="ti-shopping-cart"></span>
                                 Add to cart
                             </button>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
         <section class="long-description">
@@ -917,13 +915,11 @@
                     <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor </p>
                     <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsumLorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsumLorem ipsum dolor Lorem ipsum dolor </p>
                 </div>
-                <form method="post" action="{% url 'product_details' product.link %}">
-                    {% csrf_token %}
                     <div class="product-action-button small">
                         <div class="quantity-controls">
                             <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                            <input class="quantity"  name="quantityy"  type="number" min="0" value="1" readonly>
-                            <button class="update-cart" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                            <input class="quantity"  name="quantity"  type="number" min="0" value="1" readonly>
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
                         </div>
                         <div data-product="{{ product.id }}" data-action="add" class="tocart-control update-cart">
                                 {% csrf_token %}
@@ -933,7 +929,6 @@
                                 </button>
                         </div>
                     </div>
-                </form>
             </div>
         </section>
 

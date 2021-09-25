@@ -33,4 +33,4 @@ def minfunc(request):
             total = total + float(item.quantity_price())
         for item in items:
             total_items = total_items + item.quantity
-    return {'total_items': total_items, 'total': total, 'items': items, 'order': order}
+    return {'total_items': total_items, 'total': total, 'items': items}

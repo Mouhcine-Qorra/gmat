@@ -25,19 +25,12 @@ from .utils import minfunc
 def product_details(request, slug):
     data = minfunc(request)
     total_items = data['total_items']
-    order = data['order']
 
     product = Product.objects.get(link=slug)
     products = Product.objects.all()
     empfehlungen = random.sample(list(products), 10)
     if product in empfehlungen:
         empfehlungen.remove(product)
-    if request.method == 'POST':
-        quantity = request.POST.get('quantityy')
-        item, created = OrderItem.objects.get_or_create(product=product, order=order, to_order=False)
-        print(f'\nitem.quantity: {item.quantity}  quantity:{quantity}\n')
-        item.quantity += int(quantity)
-        print(f'item.quantity: {item.quantity}  quantity:{quantity}\n')
     return render(request, 'store/product_details.html', {'total_items': total_items, 'empfehlungen': empfehlungen, 'product': product})
 
 def products(request):
@@ -244,10 +237,8 @@ def register(request):
                     if customer.ip == f'0.0.0.0||{str(request.META["HTTP_USER_AGENT"])}':
                         customer.ip = IP
                     customer.save()
-                    print(f'\n\ndaz mn try')
                 except:
                     Customer.objects.create(user=user, name=username, email=email, ip=IP)
-                    print(f'\n\ndaz mn except')
                 userlogin = authenticate(request, username=username, password=password)
                 if userlogin is not None:
                     login(request, userlogin)
