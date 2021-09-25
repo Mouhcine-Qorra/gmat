@@ -44,6 +44,9 @@
             .wrapper{
                 padding: 1rem;
             }
+            .swiper .swiper-slide{
+                width: auto;
+            }
             @media only screen and (max-width: 420px){
                 .maxpadding {
                     padding-left: 0.6rem;
@@ -783,8 +786,12 @@
                 <div class="wrapper">
                     <ul>
                         <li><a href="{% url 'store' %}">Home</a></li>
-                        <li><a href="{% url 'register' %}">Register</a></li>
-                        <li><a href="{% url 'login' %}">Login</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                        {% else %}
+                            <li><a href="{% url 'register' %}">Register</a></li>
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                        {% endif %}
                         <li><a href="mailto:qorra.mouhcine1@gmail.com">Contact</a></li>
                     </ul>
                 </div>
@@ -800,7 +807,6 @@
             </div>
         </section>
     </header>
-
 
     <main>
         {% block content %}
@@ -826,13 +832,13 @@
 
                     {% for product in products %}
                         <div class="product">
-                            <a href="{% url 'product_details' %}">
+                            <a href="{% url 'product_details' product.link %}">
                                 <div class="product-img" style="background-image: url('{{ product.image.url }}')">
                                     <div class="sale-badge"><span class="spanii">NEW</span></div>
                                 </div>
                             </a>
                             <div class="product-desc">
-                                <a href="{% url 'product_details' %}">
+                                <a href="{% url 'product_details' product.link %}">
                                     <h3>{{ product.name }}</h3>
                                     <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}</strong></h2>
                                     <p>Lorem ipduojoedo jnjdenod jniedz</p>
@@ -861,13 +867,13 @@
                             {% for product in similar_products %}
                             <div class="swiper-slide">
                                 <div class="product">
-                                    <a href="{% url 'product_details' %}">
+                                    <a href="{% url 'product_details' product.link %}">
                                         <div class="product-img" style="background-image: url('{{ product.image.url }}')">
                                             <div class="sale-badge"><span class="spanii">NEW</span></div>
                                         </div>
                                     </a>
                                     <div class="product-desc">
-                                        <a href="{% url 'product_details' %}">
+                                        <a href="{% url 'product_details' product.link %}">
                                             <h3>{{ product.name }}</h3>
                                             <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}</strong></h2>
                                             <p>Lorem ipduojoedo jnjdenod jniedz</p>
@@ -985,10 +991,17 @@
             </a>
         </div>
         <div class="menu-item">
-            <a href="{% url 'register' %}" style="color:#333">
-                <span class="ti-user"></span>
-                <p>Account</p>
-            </a>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}" style="color:#333">
+                    <span class="ti-user"></span>
+                    <p>Logout</p>
+                </a>
+            {% else %}
+                <a href="{% url 'register' %}" style="color:#333">
+                    <span class="ti-user"></span>
+                    <p>Account</p>
+                </a>
+            {% endif %}
         </div>
         <div class="menu-item">
             <a href="mailto:qorra.mouhcine1@gmail.com" style="color:#333">
@@ -1011,15 +1024,10 @@
 
         let similarProducts = new Swiper('.similar-swiper',{
             spaceBetween: 20,
-            slidesPerView: 2,
+            slidesPerView: 'auto',
             breakpoints: {
-                768: {
-                    slidesPerView: 3,
-                }
-            },
-            breakpoints: {
-                1124: {
-                    slidesPerView: 4,
+                1024: {
+                    slidesPerView: 5,
                 }
             },
             navigation:{

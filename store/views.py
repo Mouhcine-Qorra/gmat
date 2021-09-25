@@ -7,7 +7,7 @@ from ipware import get_client_ip
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-import datetime, os, json
+import datetime, os, json, random
 from .utils import minfunc
 
 
@@ -16,16 +16,29 @@ from .utils import minfunc
 #def get_ip_address():
 #    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #    s.connect(("8.8.8.8", 80))
-#    return s.getsockname()[0]
+#    return s.getsockname()[0] random.choices(list, k=3)
 
 
 
 
 
-def product_details(request):
+def product_details(request, slug):
     data = minfunc(request)
     total_items = data['total_items']
-    return render(request, 'store/product_details.html', {'total_items': total_items})
+    order = data['order']
+
+    product = Product.objects.get(link=slug)
+    products = Product.objects.all()
+    empfehlungen = random.sample(list(products), 10)
+    if product in empfehlungen:
+        empfehlungen.remove(product)
+    if request.method == 'POST':
+        quantity = request.POST.get('quantityy')
+        item, created = OrderItem.objects.get_or_create(product=product, order=order, to_order=False)
+        print(f'\nitem.quantity: {item.quantity}  quantity:{quantity}\n')
+        item.quantity += int(quantity)
+        print(f'item.quantity: {item.quantity}  quantity:{quantity}\n')
+    return render(request, 'store/product_details.html', {'total_items': total_items, 'empfehlungen': empfehlungen, 'product': product})
 
 def products(request):
     data = minfunc(request)
@@ -83,7 +96,7 @@ def checkout(request):
             order, created = Order.objects.get_or_create(customer=customer)
         except:
             order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.filter(is_current=True)
+        items = order.orderitem_set.filter(to_order=False)
         if items.count() < 1:
             return redirect('store')
         for item in items:
@@ -101,7 +114,7 @@ def checkout(request):
                 order.transaction_id = transaction_id
                 order.save()
                 for i in items:
-                    i.is_current = False
+                    i.to_order = True
                     i.save()
                 return redirect('store')
             else:
@@ -119,7 +132,7 @@ def checkout(request):
             order, created = Order.objects.get_or_create(customer=customer)
         except:
             order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.filter(is_current=True)
+        items = order.orderitem_set.filter(to_order=False)
         if items.count() < 1:
             return redirect('store')
         id_customer = customer.id
@@ -138,7 +151,7 @@ def checkout(request):
                 order.transaction_id = transaction_id
                 order.save()
                 for i in items:
-                    i.is_current = False
+                    i.to_order = True
                     i.save()
                 return redirect('store')
             else:
@@ -190,7 +203,7 @@ def delete_item(request, id):
             customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
     product = Product.objects.get(id=id)
     order = Order.objects.get(customer=customer, complete=False)
-    item = OrderItem.objects.get(order=order, product=product, is_current=True)
+    item = OrderItem.objects.get(order=order, product=product, to_order=False)
     item.delete()
     return redirect('cart')
 

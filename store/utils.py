@@ -10,7 +10,7 @@ def minfunc(request):
             order, created = Order.objects.get_or_create(customer=customer)
         except:
             order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.filter(is_current=True)
+        items = order.orderitem_set.filter(to_order=False)
         for item in items:
             total = total + float(item.quantity_price())
         for item in items:
@@ -28,9 +28,9 @@ def minfunc(request):
             order, created = Order.objects.get_or_create(customer=customer)
         except:
             order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.filter(is_current=True)
+        items = order.orderitem_set.filter(to_order=False)
         for item in items:
             total = total + float(item.quantity_price())
         for item in items:
             total_items = total_items + item.quantity
-    return {'total_items': total_items, 'total': total, 'items': items}
+    return {'total_items': total_items, 'total': total, 'items': items, 'order': order}

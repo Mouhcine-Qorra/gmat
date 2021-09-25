@@ -21,7 +21,7 @@
 											<div class="cart-product-info">
 												<p class="cart-product-name">{{ item.product.name }}</p>
 												<p class="cart-price-sm">€{{ item.product.price|floatformat:2 }}</p>
-												<small>x 1</small>
+												<small>x {{ item.quantity }}</small>
 											</div>
 										</div>
 										<div class="cart-quantity-md">
@@ -64,14 +64,14 @@
 								<p>€{{ total|floatformat:2 }}</p>
 							</div>
 							<div class="cart-action-button">
-								<a href="">&#x2190; Continue shopping</a>
-								<a href="" class="btn-main">Proceed to checkout &#x2192;</a>
+								<a href="{% url 'store' %}">&#x2190; Continue shopping</a>
+								<a href="{% url 'checkout' %}" class="btn-main">Proceed to checkout &#x2192;</a>
 							</div>
 						</div>
 					{% endif %}
 				</div>
 			</div>
-			{% if total_items == 1 %}
+			{% if total_items <= 1 %}
 			<div class="one-item">
 				<br><br><br><br><br>
 			</div>

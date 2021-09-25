@@ -8,6 +8,25 @@
         <link rel="icon" type="image/png" href="{% static 'img/main/about.png' %}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+        <script type="text/javascript">
+            var user = '{{ request.user }}'
+            function getToken(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            const csrftoken = getToken('csrftoken');
+        </script>
         <style>
             :root{
                 --mainColor: #e96161;
@@ -17,9 +36,16 @@
                 padding: 0;
                 margin: 0;
                 box-sizing: border-box;
-                text-decoration: none;
+                text-decoration: unset;
                 list-style-type: none;
                 font-family: 'GT Walsheim Pro', sans-serif;
+            }
+            a{
+                text-decoration: unset;
+                color: none;
+            }
+            .swiper .swiper-slide{
+                width: auto;
             }
             .wrapper {
                 padding: 1rem;
@@ -185,7 +211,7 @@
                 margin-top: .4rem;
                 margin-right: 0.3rem;
             }
-            .product-desc p {
+            .product-desc p{
                 font-size: .8rem;
                 margin-bottom: .4rem;
             }
@@ -506,8 +532,11 @@
             #droit{
                 margin-left: 9px;
             }
-            .brand{
+            .brand a{
                 color: #333;
+                text-decoration: unset;
+            }
+            .brandi a{
                 text-decoration: unset;
             }
 
@@ -558,6 +587,7 @@
                 }
                 .sub-nav-top a{
                     color: #fff;
+                    text-decoration: unset;
                 }
                 .sub-nav-bottom-links{
                     text-align: center;
@@ -566,6 +596,7 @@
                     display: inline-block;
                     margin: 0rem 1rem;
                     color: #505050 !important;
+                    text-decoration: unset;
                 }
                 .hero{
                     margin-top: 0rem !important;
@@ -618,6 +649,9 @@
                 .wrapper{
                     width: 70%;
                     margin: auto;
+                }
+                .product-img{
+                    height: 185px;
                 }
                 .wrapper.full-screen{
                     width: 100%;
@@ -752,13 +786,15 @@
                         <span class="ti-search"></span>
                     </div>
 
-                    <div>
-                        <a href="{% url 'store' %}" class="brand"><h2>Mouhcin</h2></a>
+                    <div class="brand">
+                        <a href="{% url 'store' %}"><h2>Mouhcin</h2></a>
                     </div>
 
                     <div class="cart">
-                        <span class="ti-shopping-cart" style="color: var(--mainColor);"></span>
-                        <span class="cart-count"><span class="text-main">{{ total_items }}</span></span>
+                        <a href="{% url 'cart' %}" style="color: var(--mainColor);">
+                            <span class="ti-shopping-cart"></span>
+                            <span class="cart-count"><span class="text-main">{{ total_items }}</span></span>
+                        </a>
                     </div>
             </nav>
         </div>
@@ -767,11 +803,14 @@
             <div class="sub-nav-top">
                 <div class="wrapper">
                     <ul>
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Track</a></li>
-                        <li><a href="">Order</a></li>
-                        <li><a href="">Contact</a></li>
-                        <li><a href="">About</a></li>
+                        <li><a href="{% url 'store' %}">Home</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'register' %}">Register</a></li>
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                        {% else %}
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                        {% endif %}
+                        <li><a href="mailto:qorra.mouhcine1@gmail.com">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -792,7 +831,7 @@
                 <!-- Swiper -->
                 <div class="swiper gallery-top">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide" style="background-image:url('{% static 'img/products/chair6.jpg' %}')"></div>
+                        <div class="swiper-slide" style="background-image:url('{{ product.image.url }}')"></div>
                         <div class="swiper-slide" style="background-image:url('{% static 'img/products/chair1.jpg' %}')"></div>
                         <div class="swiper-slide" style="background-image:url('{% static 'img/products/chair2.jpg' %}')"></div>
                         <div class="swiper-slide" style="background-image:url('{% static 'img/products/chair3.jpg' %}')"></div>
@@ -801,7 +840,7 @@
 
                 <div class="swiper gallery-thumbs">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide" style="background-image:url('{% static 'img/products/chair6.jpg' %}')"></div>
+                        <div class="swiper-slide" style="background-image:url('{{ product.image.url }}')"></div>
                         <div class="swiper-slide" style="background-image:url('{% static 'img/products/chair1.jpg' %}')"></div>
                         <div class="swiper-slide" style="background-image:url('{% static 'img/products/chair2.jpg' %}')"></div>
                         <div class="swiper-slide" style="background-image:url('{% static 'img/products/chair3.jpg' %}')"></div>
@@ -809,8 +848,8 @@
                 </div>
             </div>
             <div class="wrapper product-description">
-                <h3>Stühle für alle Zimmer</h3>
-                <p><small class="sale bg-main">NEW</small><span class="price text-main">€12.50</span></p>
+                <h3>{{ product.name }}</h3>
+                <p><small class="sale bg-main">NEW</small><span class="price text-main">€{{ product.price }}</span></p>
                 <p class="short-describe">Bla bbn uiib zs hbkaz hbickzini ibhiknihbzicBla bbn uiib zs hbkaz hbickzini ibhiknihbzicBla bbn uiib zs hbkaz hbickzini ibhiknihbzic</p>
                 <div class="variations color">
                     <h4>COLOR</h4>
@@ -854,19 +893,21 @@
                     </div>
                 </div>
 
-                <div class="product-action-button large">
-                    <div class="quantity-controls">
-                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                        <input class="quantity"  name="quantity" id="droit"  type="number" min="0" value="1" readonly>
-                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                <form method="post" action="{% url 'product_details' product.link %}">
+                    {% csrf_token %}
+                    <div class="product-action-button large">
+                        <div class="quantity-controls">
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                            <input class="quantity"  name="quantityy"  type="number" min="0" value="1" readonly>
+                            <button class="update-cart" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>                        </div>
+                        <div data-product="{{ product.id }}" data-action="add" class="tocart-control update-cart">
+                            <button class="btn-main" type="submit">
+                                <span class="ti-shopping-cart"></span>
+                                Add to cart
+                            </button>
+                        </div>
                     </div>
-                    <div class="tocart-control">
-                        <button class="btn-main">
-                            <span class="ti-shopping-cart"></span>
-                            Add to cart
-                        </button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
         <section class="long-description">
@@ -876,19 +917,23 @@
                     <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor </p>
                     <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsumLorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor Lorem ipsumLorem ipsum dolor Lorem ipsum dolor </p>
                 </div>
-                <div class="product-action-button small">
-                    <div class="quantity-controls">
-                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                        <input class="quantity"  name="quantity"  type="number" min="0" value="1" readonly>
-                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                <form method="post" action="{% url 'product_details' product.link %}">
+                    {% csrf_token %}
+                    <div class="product-action-button small">
+                        <div class="quantity-controls">
+                            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                            <input class="quantity"  name="quantityy"  type="number" min="0" value="1" readonly>
+                            <button class="update-cart" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                        </div>
+                        <div data-product="{{ product.id }}" data-action="add" class="tocart-control update-cart">
+                                {% csrf_token %}
+                                <button class="btn-main">
+                                    <span class="ti-shopping-cart"></span>
+                                    Add to cart
+                                </button>
+                        </div>
                     </div>
-                    <div class="tocart-control">
-                        <button class="btn-main">
-                            <span class="ti-shopping-cart"></span>
-                            Add to cart
-                        </button>
-                    </div>
-                </div>
+                </form>
             </div>
         </section>
 
@@ -900,157 +945,30 @@
                     <!-- Swiper -->
                     <div class="swiper similar-swiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
+                            {% for product in empfehlungen %}
+                                <div class="swiper-slide">
+                                    <div class="product">
+                                        <a href="{% url 'product_details' product.link %}">
+                                            <div class="product-img" style="background-image: url('{{ product.image.url }}')">
+                                                <div class="sale-badge"><span class="spanii">NEW</span></div>
+                                            </div>
+                                        </a>
+                                        <div class="product-desc">
+                                            <a href="{% url 'product_details' product.link %}" style="text-decoration:unset;">
+                                                <h3>{{ product.name }}</h3>
+                                                <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}</strong></h2>
+                                                <p style="color:#5e6774;">Lorem ipduojoedo jnjdenod jniedz</p>
+                                            </a>
+                                            <div data-product="{{ product.id }}" data-action="add" class="con update-cart">
+                                                <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
+                                                      style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
+                                                </span>
+                                                <button>Add to Cart</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="swiper-slide">
-                                <div class="product">
-                                    <div class="product-img" style="background-image: url('{% static 'img/products/chair6.jpg' %}')">
-                                        <div class="sale-badge"><span class="spanii">NEW</span></div>
-                                    </div>
-                                    <div class="product-desc">
-                                        <h3>Privilege title</h3>
-                                        <h2 style="display: inline-block; float: right"><strong>€{{ product.price|floatformat:2 }}10</strong></h2>
-                                        <p>Lorem ipduojoedo jnjdenod jniedz</p>
-                                        <div class="con">
-                                            <span class="iconify" data-icon="iconoir:add-to-cart" data-width="29"
-                                                  style="float:left;font-size:1.3rem;margin-top: -0.15rem;color: var(--mainColor);display:inline-block;">
-                                            </span>
-                                            <button data-product="{{ product.id }}" data-action="add" class="update-cart">Add to Cart</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
 
                         </div>
                         <div class="swiper-button-prev"></div>
@@ -1086,6 +1004,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js">
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/cart.js' %}" type="text/javascript"></script>
     <script>
         let direction = 'horizontal'
         let galleryThumbs = new Swiper('.gallery-thumbs', {
@@ -1120,10 +1039,10 @@
 
         let similarProducts = new Swiper('.similar-swiper',{
             spaceBetween: 20,
-            slidesPerView: 2,
+            slidesPerView: 'auto',
             breakpoints: {
-                768: {
-                    slidesPerView: 3,
+                1024: {
+                    slidesPerView: 5,
                 }
             },
             navigation:{

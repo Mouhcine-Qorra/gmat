@@ -17,7 +17,7 @@ class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ["date_added", "date_uploaded"]
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('product', 'order', 'quantity', 'is_current', 'date_added', 'date_uploaded')
+    list_display = ('product', 'order', 'quantity', 'to_order', 'date_added', 'date_uploaded')
     readonly_fields = ["date_added", "date_uploaded"]
 
 class ShippingAdmin(admin.ModelAdmin):
