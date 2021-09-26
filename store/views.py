@@ -29,12 +29,9 @@ def product_details(request, slug):
     product = Product.objects.get(link=slug)
     products = Product.objects.all()
     prd_images = ProductImage.objects.filter(product=product)
-    for i in prd_images:
-        print(i.images.url)
     empfehlungen = random.sample(list(products), 10)
     if product in empfehlungen:
         empfehlungen.remove(product)
-    print(empfehlungen)
     return render(request, 'store/product_details.html',
                   {'total_items': total_items, 'empfehlungen': empfehlungen, 'product': product, 'prd_images': prd_images})
 
@@ -210,6 +207,9 @@ def register(request):
         return redirect('store')
     else:
         form = CreateUserForm()
+        data = minfunc(request)
+        total_items = data['total_items']
+        var = 'sent'
         if request.method == 'POST':
             form = CreateUserForm(request.POST)
             if form.is_valid():
@@ -222,7 +222,7 @@ def register(request):
                 password = request.POST.get('password1')
                 if User.objects.filter(email=email).exists():
                     messages.info(request, 'User with this email already exist! try to login')
-                    return redirect('login')
+                    return redirect('register')
                 else:
                     user = form.save()
                 # try get users who already have make an order
@@ -234,7 +234,7 @@ def register(request):
                     if customer.user is not None:
                         # check if that user already have an account
                         messages.error(request, 'account already exist with this email! please try to login or reset password')
-                        return render(request, 'auth/login.html', {'form': form})
+                        return render(request, 'auth/register.html', {'form': form})
                     else:
                         customer.user = user
                     customer.name = username
@@ -253,7 +253,7 @@ def register(request):
                 return redirect('store')
             else:
                 messages.error(request, 'please fill all fields with correct informations')
-        return render(request, 'auth/register.html', {'form': form})
+        return render(request, 'auth/register.html', {'form': form, 'total_items': total_items, 'var': var})
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -267,8 +267,7 @@ def login_view(request):
                 user = Customer.objects.get(email=email)
             except:
                 messages.info(request, 'Username or Password is incorrect')
-                msg = 'info'
-                return render(request, 'auth/login.html', {'msg': msg})
+                return redirect('register')
             username = user.user.username
             auth = authenticate(request, username=username, password=password)
             if auth is None:
@@ -276,7 +275,7 @@ def login_view(request):
             else:
                 login(request, auth)
                 return redirect('store')
-        return render(request, 'auth/login.html', {'msg': msg})
+        return render(request, 'auth/register.html', {'msg': msg})
 
 @login_required(login_url='login')
 def logout_view(request):

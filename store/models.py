@@ -84,10 +84,10 @@ class ShippingAdress(models.Model):
 
 class Portfolio(models.Model):
     user = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
-    name = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField(max_length=400, blank=True, null=True)
     email = models.EmailField(max_length=500, blank=True, null=True)
     message = models.TextField(blank=True, null=True)
-    ip = models.CharField(max_length=20, null=True, blank=True)
+    ip = models.CharField(max_length=400, null=True, blank=True)
     date_added = models.DateTimeField('created', auto_now_add=True, null=True, blank=True)
     def __str__(self):
         return self.name
