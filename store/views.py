@@ -40,7 +40,15 @@ def products(request):
     total_items = data['total_items']
     products = Product.objects.all()[:8]
     similar_products = Product.objects.all()[8:]
-    return render(request, 'store/products.html', {'products': products, 'total_items': total_items, 'similar_products': similar_products})
+    var = 'sent'
+    if 'color_code' in request.session:
+        color = request.session['color_code']
+        print(color)
+        del request.session['color_code']
+    else:
+        color = '#00c300f5'
+    return render(request, 'store/products.html', {'products': products, 'var': var, 'color': color,
+                                                   'total_items': total_items, 'similar_products': similar_products})
 
 def portfolio(request):
     ip, is_routable = get_client_ip(request)
@@ -204,12 +212,19 @@ def delete_item(request, id):
 
 def register(request):
     if request.user.is_authenticated:
+        request.session['color_code'] = '#b7e961'
+        messages.info(request, f'Sie sind bereits eingeloggt')
         return redirect('store')
     else:
         form = CreateUserForm()
         data = minfunc(request)
         total_items = data['total_items']
         var = 'sent'
+        if 'color_code' in request.session:
+            color = request.session['color_code']
+            del request.session['color_code']
+        else:
+            color = '#00c300f5'
         if request.method == 'POST':
             form = CreateUserForm(request.POST)
             if form.is_valid():
@@ -221,7 +236,8 @@ def register(request):
                 username = form.cleaned_data.get('username')
                 password = request.POST.get('password1')
                 if User.objects.filter(email=email).exists():
-                    messages.info(request, 'User with this email already exist! try to login')
+                    request.session['color_code'] = '#b7e961'
+                    messages.info(request, 'Konto existiert bereits mit dieser E-Mail! Bitte versuchen Sie sich anzumelden oder das Passwort zurückzusetzen')
                     return redirect('register')
                 else:
                     user = form.save()
@@ -233,8 +249,9 @@ def register(request):
                         customer = Customer.objects.get(email=IP+'@gmail.com')
                     if customer.user is not None:
                         # check if that user already have an account
-                        messages.error(request, 'account already exist with this email! please try to login or reset password')
-                        return render(request, 'auth/register.html', {'form': form})
+                        request.session['color_code'] = '#b7e961'
+                        messages.error(request, 'Konto existiert bereits mit dieser E-Mail! Bitte versuchen Sie sich anzumelden oder das Passwort zurückzusetzen')
+                        return redirect('register')
                     else:
                         customer.user = user
                     customer.name = username
@@ -246,36 +263,45 @@ def register(request):
                     Customer.objects.create(user=user, name=username, email=email, ip=IP)
                 userlogin = authenticate(request, username=username, password=password)
                 if userlogin is not None:
+                    request.session['color_code'] = '#00c300f5'
                     login(request, userlogin)
-                    messages.success(request, f'Welcome {username.title()}, your account has been created successfully ')
+                    messages.success(request, f'Willkommen {username.title()}, Ihr Konto wurde erfolgreich erstellt ')
                 else:
-                    messages.info(request, 'Account already exist!')
+                    request.session['color_code'] = '#b7e961'
+                    messages.info(request, 'Bitte loggen Sie sich ein!')
+                    #send me email to contact the customer
                 return redirect('store')
             else:
-                messages.error(request, 'please fill all fields with correct informations')
-        return render(request, 'auth/register.html', {'form': form, 'total_items': total_items, 'var': var})
+                request.session['color_code'] = '#b7e961'
+                messages.error(request, 'Bitte füllen Sie alle erforderlichen Felder mit den richtigen Informationen aus')
+        return render(request, 'auth/register.html', {'form': form, 'total_items': total_items, 'var': var, 'color': color})
 
 def login_view(request):
     if request.user.is_authenticated:
+        request.session['color_code'] = '#b7e961'
+        messages.info(request, f'Sie sind bereits eingeloggt')
         return redirect('store')
     else:
-        msg = None
         if request.method == 'POST':
             email = request.POST.get('email')
             password = request.POST.get('password')
             try:
                 user = Customer.objects.get(email=email)
             except:
-                messages.info(request, 'Username or Password is incorrect')
+                messages.info(request, 'Username oder Password ist falsch')
+                request.session['color_code'] = '#b7e961'
                 return redirect('register')
             username = user.user.username
             auth = authenticate(request, username=username, password=password)
             if auth is None:
-                msg = 'info'
+                messages.info(request, 'Username oder Password ist falsch')
+                request.session['color_code'] = '#b7e961'
             else:
+                request.session['color_code'] = '#00c300f5'
                 login(request, auth)
+                messages.info(request, f'Willkommen zurück {username.title()}')
                 return redirect('store')
-        return render(request, 'auth/register.html', {'msg': msg})
+        return redirect('register')
 
 @login_required(login_url='login')
 def logout_view(request):

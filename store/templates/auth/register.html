@@ -28,7 +28,6 @@
                 z-index: 9;
             }
             .alert {
-                background-color: #00c300f5;
                 color: white;
                 text-align: center;
                 padding-top: 20px;
@@ -503,7 +502,7 @@
 
         {% for message in messages %}
             <div class="shooter" id="success-alert">
-                <div class="alert">
+                <div class="alert" style="background-color: {{color}};">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                     {{ message }}
                 </div>
