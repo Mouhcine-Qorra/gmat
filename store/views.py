@@ -32,8 +32,14 @@ def product_details(request, slug):
     empfehlungen = random.sample(list(products), 10)
     if product in empfehlungen:
         empfehlungen.remove(product)
+    var = 'sent'
+    if 'color_code' in request.session:
+        color = request.session['color_code']
+        del request.session['color_code']
+    else:
+        color = '#00c300f5'
     return render(request, 'store/product_details.html',
-                  {'total_items': total_items, 'empfehlungen': empfehlungen, 'product': product, 'prd_images': prd_images})
+                  {'total_items': total_items, 'empfehlungen': empfehlungen, 'product': product, 'prd_images': prd_images, 'var': var, 'color': color})
 
 def products(request):
     data = minfunc(request)
@@ -87,11 +93,23 @@ def cart(request):
     items = data['items']
     total_items = data['total_items']
     total = data['total']
-    return render(request, 'store/cart.html', {'items': items, 'total': total, 'total_items': total_items})
+    var = 'sent'
+    if 'color_code' in request.session:
+        color = request.session['color_code']
+        del request.session['color_code']
+    else:
+        color = '#00c300f5'
+    return render(request, 'store/cart.html', {'items': items, 'total': total, 'total_items': total_items, 'var': var, 'color': color})
 
 def checkout(request):
     total, total_items = 0, 0
     form = ShippingForm(request.POST or None)
+    var = 'sent'
+    if 'color_code' in request.session:
+        color = request.session['color_code']
+        del request.session['color_code']
+    else:
+        color = '#00c300f5'
     if request.user.is_authenticated:
         customer = request.user.customer
         id_customer = customer.id
@@ -159,7 +177,7 @@ def checkout(request):
                 return redirect('store')
             else:
                 messages.error(request, 'Please fill all required fields')
-    return render(request, 'store/checkout.html', {'items': items, 'customer': customer, 'total': total, 'total_items': total_items, 'form': form})
+    return render(request, 'store/checkout.html', {'items': items, 'customer': customer, 'total': total, 'total_items': total_items, 'form': form, 'var': var, 'color': color})
 
 
 
@@ -184,11 +202,14 @@ def updateItem(request):
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     item, created = OrderItem.objects.get_or_create(order=order, product=product)
     if action == 'add':
+        messages.info(request, f'"{item.product}" wurde zu Ihrem Warenkorb hinzugefügt')
         item.quantity = item.quantity + 1
     elif action == 'remove':
+        messages.info(request, f'Sie verringern die Menge an "{item.product}"')
         item.quantity = item.quantity - 1
     item.save()
     if item.quantity <= 0:
+        messages.info(request, f'"{item.product}" wurde erfolgreich gelöscht')
         item.delete()
     return JsonResponse('Item was added', safe=False)
 
@@ -263,7 +284,6 @@ def register(request):
                     Customer.objects.create(user=user, name=username, email=email, ip=IP)
                 userlogin = authenticate(request, username=username, password=password)
                 if userlogin is not None:
-                    request.session['color_code'] = '#00c300f5'
                     login(request, userlogin)
                     messages.success(request, f'Willkommen {username.title()}, Ihr Konto wurde erfolgreich erstellt ')
                 else:
@@ -297,7 +317,6 @@ def login_view(request):
                 messages.info(request, 'Username oder Password ist falsch')
                 request.session['color_code'] = '#b7e961'
             else:
-                request.session['color_code'] = '#00c300f5'
                 login(request, auth)
                 messages.info(request, f'Willkommen zurück {username.title()}')
                 return redirect('store')
@@ -308,7 +327,8 @@ def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
     else:
-        messages.info(request, "you dont have an account yet!")
+        request.session['color_code'] = '#b7e961'
+        messages.info(request, "Sie haben noch kein konto!")
     return redirect('store')
 
 def show_pdf(request):

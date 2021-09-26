@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-        <title>Mouhcin Qorra{{var}}</title>
+        <title>Mouhcin Qorra</title>
         <link rel="icon" type="image/png" href="{% static 'img/main/about.png' %}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -46,7 +46,7 @@
                 text-align: center;
                 margin: auto;
                 position: fixed;
-                top: 60px;
+                top: 0;
                 z-index: 11;
             }
             .alert {
@@ -98,11 +98,6 @@
             @media only screen and (max-width: 400px){
                 .maxpadding {
                     padding-left: 0rem;
-                }
-            }
-            @media only screen and (max-width: 768px){
-                .sticky {
-                    top: 8%;
                 }
             }
             .bg-white{
@@ -562,9 +557,6 @@
                     background: #ffffff;
                     margin-right: .5rem;
                 }
-                .sticky {
-                    top: 0;
-                }
                 .one-item{
                     display: block;
                 }
@@ -831,8 +823,7 @@
                         {% if request.user.is_authenticated %}
                             <li><a href="{% url 'logout' %}">Logout</a></li>
                         {% else %}
-                            <li><a href="{% url 'register' %}">Register</a></li>
-                            <li><a href="{% url 'login' %}">Login</a></li>
+                            <li><a href="{% url 'register' %}">Register / Login</a></li>
                         {% endif %}
                         <li><a href="mailto:qorra.mouhcine1@gmail.com">Contact</a></li>
                     </ul>
