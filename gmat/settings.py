@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-lk2-m=!p2_7fvbw_z1%*sxn#@p*sty=f7rr7#a5fkdq(3uu-pb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['portfolio-qorra.herokuapp.com', 'mouhcin-qorra.herokuapp.com', 'gmates.herokuapp.com', '127.0.0.1']
 
