@@ -51,6 +51,8 @@
             }
             .alert {
                 color: white;
+                padding-right: 16%;
+                padding-left: 16%;
                 text-align: center;
                 padding-top: 20px;
                 padding-bottom: 20px;
@@ -714,6 +716,10 @@
                     width: 70%;
                     margin: auto;
                 }
+                .alert {
+                    padding-right: 22%;
+                    padding-left: 22%;
+                }
                 .product-img{
                     height: 185px;
                 }
@@ -732,6 +738,8 @@
                 }
             }
         </style>
+        {% block head %}
+        {% endblock %}
         <!--
                 ##----------to  make image in pc screen----------##
 
@@ -1096,6 +1104,11 @@
         /*===== Hide Alert =====*/
         var data_var = "{{var}}";
         $(document).ready(function() {
+            if ( data_var == "stop" ) {
+                $("#success-alert").fadeTo(20000, 500).slideUp(500, function() {
+                    $("#success-alert").slideUp(500);
+                });
+            };
             if ( data_var == "sent" ) {
                 $("#success-alert").fadeTo(6000, 500).slideUp(500, function() {
                     $("#success-alert").slideUp(500);

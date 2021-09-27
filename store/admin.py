@@ -25,7 +25,7 @@ class ItemAdmin(admin.ModelAdmin):
     readonly_fields = ["date_added", "date_uploaded"]
 
 class ShippingAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'order', 'address', 'city', 'zipcode', 'date_added', 'date_uploaded')
+    list_display = ('customer', 'order', 'phone', 'address', 'state', 'zipcode', 'date_added', 'date_uploaded')
     readonly_fields = ["date_added", "date_uploaded"]
 
 class PortfolioAdmin(admin.ModelAdmin):

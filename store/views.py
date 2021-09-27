@@ -118,7 +118,10 @@ def checkout(request):
         except:
             order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.filter(to_order=False)
+        #return to store if user has no item in cart
         if items.count() < 1:
+            request.session['color_code'] = '#f10000'
+            messages.error(request, 'Sie haben noch kein Produkt in Ihren Warenkorb gelegt!')
             return redirect('store')
         for item in items:
             total = total + float(item.quantity_price())
@@ -128,18 +131,23 @@ def checkout(request):
             if form.is_valid():
                 update = Customer(id=id_customer, name=request.POST['name'], email=request.POST['email'])
                 update.save(update_fields=["name", "email"])
-                ShippingAdress.objects.create(customer=customer, order=order, address=request.POST['address'],
-                                              city=request.POST['city'], zipcode=request.POST['zipcode'])
+                ShippingAdress.objects.create(customer=customer, order=order, phone=request.POST['phone'], address=request.POST['address'],
+                                              state=request.POST['state'], zipcode=request.POST['zipcode'])
                 order.complete = True
-                transaction_id = datetime.datetime.now().timestamp()
-                order.transaction_id = transaction_id
+                order.transaction_id = datetime.datetime.now().timestamp()
                 order.save()
                 for i in items:
                     i.to_order = True
                     i.save()
+                messages.error(request, f'Vielen Dank {request.POST["name"].title()}, Ihre Bestellung wurde erfolgreich eingestellt, wir werden Sie bald kontaktieren')
                 return redirect('store')
             else:
-                messages.error(request, 'Please fill all required fields')
+                color = '#b7e961'
+                messages.error(request, 'Bitte füllen Sie alle erforderlichen Felder mit den richtigen Informationen aus')
+        else:
+            color = '#05a100'
+            var = 'stop'
+            messages.info(request, 'Ich habe die Zahlung auf dieser Seite nicht integriert, damit Sie den Checkout-Prozess testen können, PS: Sie können nicht in Zahlungsfelder schreiben')
     else:
         ip, is_routable = get_client_ip(request)
         if not ip:
@@ -154,7 +162,10 @@ def checkout(request):
         except:
             order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.filter(to_order=False)
+        #return to store if user has no item in cart
         if items.count() < 1:
+            request.session['color_code'] = '#f10000'
+            messages.error(request, 'Sie haben noch kein Produkt in Ihren Warenkorb gelegt!')
             return redirect('store')
         id_customer = customer.id
         for item in items:
@@ -165,8 +176,8 @@ def checkout(request):
             if form.is_valid():
                 update = Customer(id=id_customer, name=request.POST['name'], email=request.POST['email'])
                 update.save(update_fields=["name", "email"])
-                ShippingAdress.objects.create(customer=customer, order=order, address=request.POST['address'],
-                                              city=request.POST['city'], zipcode=request.POST['zipcode'])
+                ShippingAdress.objects.create(customer=customer, phone=request.POST['phone'], address=request.POST['address'],
+                                              state=request.POST['state'], zipcode=request.POST['zipcode'])
                 order.complete = True
                 transaction_id = datetime.datetime.now().timestamp()
                 order.transaction_id = transaction_id
@@ -174,9 +185,15 @@ def checkout(request):
                 for i in items:
                     i.to_order = True
                     i.save()
+                messages.error(request, f'Vielen Dank {request.POST["name"].title()}, Ihre Bestellung wurde erfolgreich eingestellt, wir werden Sie bald kontaktieren')
                 return redirect('store')
             else:
-                messages.error(request, 'Please fill all required fields')
+                color = '#b7e961'
+                messages.error(request, 'Bitte füllen Sie alle erforderlichen Felder mit den richtigen Informationen aus')
+        else:
+            color = '#05a100'
+            var = 'stop'
+            messages.info(request, 'Ich habe die Zahlung auf dieser Seite nicht integriert, damit Sie den Checkout-Prozess testen können, PS: Sie können nicht in Zahlungsfelder schreiben')
     return render(request, 'store/checkout.html', {'items': items, 'customer': customer, 'total': total, 'total_items': total_items, 'form': form, 'var': var, 'color': color})
 
 

@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 class ShippingForm(ModelForm):
     class Meta:
         model = ShippingAdress
-        fields = ['customer', 'order', 'address', 'city', 'zipcode']
+        fields = ['customer', 'order', 'phone', 'address', 'zipcode', 'state']
 
 class CreateUserForm(UserCreationForm):
     class Meta:

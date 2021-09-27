@@ -1,147 +1,207 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    body {
-        font-family: Arial;
-        font-size: 17px;
-        padding: 8px;
-    }
+{% extends 'store/products.html' %}
+{% load static %}
+    {% block head %}
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 17px;
+            padding: 8px;
+        }
+        .bottop{
+            margin-bottom: 2rem;
+        }
+        @media only screen and (min-width: 1100px){
+            .marleft{
+                margin-left: 4%;
+                margin-right: 10%;
+            }
+        }
+        .sub-nav-bottom{
+            display: none;
+        }
+        .shooter{
+            width: 100%;
+            text-align: center;
+            margin: auto;
+            position: fixed;
+            top: 0;
+            z-index: 11;
+        }
+        .alert {
+            color: white;
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-radius: 10px;
+        }
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            float: right;
+            font-size: 40px;
+            padding-right: 20px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .closebtn:hover {
+            color: black;
+        }
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
 
-    * {
-        box-sizing: border-box;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    .row {
-        display: -ms-flexbox; /* IE10 */
-        display: flex;
-        -ms-flex-wrap: wrap; /* IE10 */
-        flex-wrap: wrap;
-        margin: 0 -16px;
-    }
-
-    .col-25 {
-        -ms-flex: 25%; /* IE10 */
-        flex: 25%;
-    }
-
-    .col-50 {
-        -ms-flex: 50%; /* IE10 */
-        flex: 50%;
-    }
-
-    .col-75 {
-        -ms-flex: 75%; /* IE10 */
-        flex: 75%;
-    }
-
-    .col-25,
-    .col-50,
-    .col-75 {
-        padding: 0 16px;
-    }
-
-    .container {
-        background-color: #f2f2f2;
-        padding: 5px 20px 15px 20px;
-        border: 1px solid lightgrey;
-        border-radius: 3px;
-    }
-
-    input[type=text] {
-        width: 100%;
-        margin-bottom: 20px;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-    }
-
-    label {
-        margin-bottom: 10px;
-        display: block;
-    }
-
-    .icon-container {
-        margin-bottom: 20px;
-        padding: 7px 0;
-        font-size: 24px;
-    }
-
-    .btn {
-        background-color: #e96161;
-        color: white;
-        padding: 12px;
-        margin: 10px 0;
-        border: none;
-        width: 100%;
-        border-radius: 3px;
-        cursor: pointer;
-        font-size: 17px;
-    }
-
-    .btn:hover {
-        background-color: #ff8b8b;
-    }
-
-    a {
-        color: #2196F3;
-    }
-
-    hr {
-        border: 1px solid lightgrey;
-    }
-
-    span.price {
-        float: right;
-        color: grey;
-    }
-
-    /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-    @media (max-width: 820px) {
         .row {
-            flex-direction: column-reverse;
+            display: -ms-flexbox; /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap; /* IE10 */
+            flex-wrap: wrap;
+            margin: 0 -16px;
         }
-        .col-25 {
-            margin-bottom: 20px;
-        }
-    }
-</style>
-</head>
-<body>
 
+        .col-25 {
+            -ms-flex: 25%; /* IE10 */
+            flex: 25%;
+        }
+
+        .col-50 {
+            -ms-flex: 50%; /* IE10 */
+            flex: 50%;
+        }
+
+        .col-75 {
+            -ms-flex: 75%; /* IE10 */
+            flex: 75%;
+        }
+
+        .col-25,
+        .col-50,
+        .col-75 {
+            padding: 0 16px;
+        }
+
+        .container {
+            background-color: #f2f2f2;
+            padding: 5px 20px 15px 20px;
+            border: 1px solid lightgrey;
+            border-radius: 3px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        label {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .icon-container {
+            margin-bottom: 20px;
+            padding: 7px 0;
+            font-size: 24px;
+        }
+
+        .btn {
+            background-color: #e96161;
+            color: white;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            width: 100%;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        .btn:hover {
+            background-color: #ff8b8b;
+        }
+
+        a {
+            color: #2196F3;
+        }
+
+        hr {
+            border: 1px solid lightgrey;
+        }
+
+        span.price {
+            float: right;
+            color: grey;
+        }
+
+        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+        @media (max-width: 820px) {
+            .row {
+                flex-direction: column-reverse;
+            }
+            .col-25 {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+    {% endblock %}
+
+{% for message in messages %}
+    <div class="shooter" id="success-alert">
+        <div class="alert" style="background-color: {{color}};">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <p class="message-top">{{ message }}</p>
+        </div>
+    </div>
+{% endfor %}
+
+{% block content %}
+
+<br><br>
 <div class="row">
   <div class="col-75">
     <div class="container">
 
-      <form action="" method="post">
-        <div class="row">
+    <div class="row">
+      <form method="post" action="{% url 'checkout' %}" class="marleft">
+        {% csrf_token %}
           <div class="col-50">
-            <h3>Rechnungsadresse</h3>
-            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+            <h3 class="bottop">Rechnungsadresse</h3>
+            <label for="fname"><i class="fa fa-user"></i> Voller Name</label>
+            <input type="text" id="fname" name="name" placeholder="John M. Doe">
             <label for="email"><i class="fa fa-envelope"></i> Email</label>
             <input type="text" id="email" name="email" placeholder="john@example.com">
-            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-            <label for="city"><i class="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" placeholder="New York">
+            <label for="adr"><i class="fa fa-phone"></i> Telefon</label>
+            <input type="text" id="adr" name="phone" placeholder="+49 170 0000070">
+            <label for="city"><i class="fa fa-institution"></i> Address</label>
+            <input type="text" id="city" name="address" placeholder="New York 15th Street">
 
             <div class="row">
               <div class="col-50">
-                <label for="state">State</label>
+                <label for="state">Staat</label>
                 <input type="text" id="state" name="state" placeholder="NY">
               </div>
               <div class="col-50">
                 <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" placeholder="10001">
+                <input type="text" id="zip" name="zipcode" placeholder="10001">
               </div>
             </div>
           </div>
+        <input type="submit" value="Bestellen" class="btn">
+      </form>
 
+      <form method="post">
           <div class="col-50">
-            <h3>Zahlung</h3>
+            <h3 class="bottop">Zahlung</h3>
             <label for="fname">Akzeptierte Karten</label>
             <div class="icon-container">
               <i class="fa fa-cc-visa" style="color:navy;"></i>
@@ -166,26 +226,21 @@
               </div>
             </div>
           </div>
-
-        </div>
-        <input type="submit" value="Continue to checkout" class="btn">
       </form>
+
+    </div>
     </div>
   </div>
   <div class="col-25">
     <div class="container">
-      <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-      <p>Product 1      x 2 <span class="price">$15</span></p>
-      <p>Product 2   x 2<span class="price">$5</span></p>
+      <h4 class="bottop" style="margin-top:1rem;">Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>{{ total_items }}</b></span></h4>
+      {% for item in items %}
+      <p style="margin-bottom:1rem;">{{ item.product.name }}      x {{ item.quantity }} <span class="price">€{{ item.quantity_price|floatformat:2 }}</span></p>
+      {% endfor %}
       <hr>
-      <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
+      <p style="margin-bottom:1rem;margin-top:1rem;">Total <span class="price" style="color:black"><b>€{{ total|floatformat:2 }}</b></span></p>
     </div>
   </div>
 </div>
-
-</body>
-</html>
-
-
-
-
+<br><br><br><br>
+{% endblock %}
