@@ -825,13 +825,13 @@
             <div class="sub-nav-top">
                 <div class="wrapper">
                     <ul>
-                        <li><a href="{% url 'store' %}">Home</a></li>
+                        <li><a href="{% url 'store' %}"><span class="ti-home"></span> Home</a></li>   |
                         {% if request.user.is_authenticated %}
-                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                            <li><a href="{% url 'logout' %}"><span class="iconify" data-icon="fe:logout"></span> Logout</a></li>   |
                         {% else %}
-                            <li><a href="{% url 'register' %}">Register / Login</a></li>
+                            <li><a href="{% url 'register' %}"><span class="ti-user"></span> Register / Login</a></li>   |
                         {% endif %}
-                        <li><a href="mailto:qorra.mouhcine1@gmail.com">Contact</a></li>
+                        <li><a href="mailto:qorra.mouhcine1@gmail.com"><span class="ti-info"></span> Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -1041,13 +1041,13 @@
         <div class="menu-item">
             {% if request.user.is_authenticated %}
                 <a href="{% url 'logout' %}" style="color:#333">
-                    <span class="ti-user"></span>
+                    <span class="iconify" data-icon="fe:logout"></span>
                     <p>Logout</p>
                 </a>
             {% else %}
                 <a href="{% url 'register' %}" style="color:#333">
                     <span class="ti-user"></span>
-                    <p>Account</p>
+                    <p>Login / Register</p>
                 </a>
             {% endif %}
         </div>

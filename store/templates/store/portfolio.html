@@ -775,6 +775,7 @@
 
     <body>
         <!--===== HEADER =====-->
+        <img src="{% static 'img/main/Store.PNG' %}" style="display:none;">
         <header class="l-header">
             <nav class="nav bd-grid">
                 <div>
@@ -807,7 +808,7 @@
             <!--===== HOME =====-->
             <section class="home bd-grid" id="home">
                 <div class="home__data">
-                    <h1 class="home__title">Hi,<br>I am <span class="home__title-color">Mouhcin</span><br> Web Developer</h1>
+                    <h1 class="home__title">Hallo,<br>Ich bin <span class="home__title-color">Mouhcin</span><br> Web Entwickler</h1>
                     <a href="mailto:qorra.mouhcine1@gmail.com" class="button">Contact</a>
                 </div>
                 <div class="home__social">
@@ -828,7 +829,8 @@
                     </div>
                     <div>
                         <h2 class="about__subtitle">I'am Mouhcin</h2>
-                        <p class="about__text">I study computer science, with a penchant for design and logic programming.  I am passionate about improving the user experience and maximizing the user interface.</p>
+                        <p class="about__text">ich heiße MOUHCIN QORRA, ich bin Python / Django-Entwickler. Ich bin sehr leidenschaftlich daran, Dinge von Grund auf zu programmieren.
+                            Das erste Mal, dass ich Programmieren lernte, war auch das erste Mal, dass ich meinen Sinn im Leben entdeckte. Ich bin eine sehr hart arbeitende Person, positiv und motiviert, ständig zu lernen und zu verbessern.</p>
                     </div>
                 </div>
             </section>
@@ -837,8 +839,8 @@
                 <h2 class="section-title">Skills</h2>
                 <div class="skills__container bd-grid">
                     <div>
-                        <h2 class="skills__subtitle">Programming languages</h2>
-                        <p class="skills__text">I am familiar with:</p>
+                        <h2 class="skills__subtitle">Programmiersprachen</h2>
+                        <p class="skills__text">ich bin vertraut mit:</p>
                         <div class="skills__data">
                             <div class="skills__names">
                                 <i class='bx bxl-html5 skills__icon'></i>
@@ -900,7 +902,7 @@
 
                     <div>
                         <h2 class="skills__subtitle">Frameworks & Tools</h2>
-                        <p class="skills__text">I work daily with:</p>
+                        <p class="skills__text">Ich arbeite täglich mit:</p>
                         <div class="skills__data">
                             <div class="skills__names">
                                 <i class="iconify skills__icon" data-icon="akar-icons:django-fill"></i>
@@ -958,16 +960,17 @@
                         </div>
                     </div>
                     <div class="btn-text-center">
-                        <button onclick="window.open('lebenslauf')" class="lebenslauf__button button"><i class="fa fa-download"></i> Resume</button>
+                        <button onclick="window.open('lebenslauf')" class="lebenslauf__button button"><i class="fa fa-download"></i> Lebenslauf herunterladen</button>
                     </div>
                 </div>
             </section>
             <!--===== WORK =====-->
             <section class="work section" id="work">
                 <h2 class="section-title">Work</h2><br>
-                <p class="skills__text_work">My latest Project</p>
+                <p class="skills__text_work">Mein letzten Projekt</p>
                 <div class="work__container bd-grid">
                     <div class="work__img">
+                        <h2 class="skills__subtitle" style="text-align: center;"><a href="{% url 'store' %}" target=”_blank”>Ecommerce Website</a></h2>
                         <a href="{% url 'store' %}" target=”_blank”><img src="{% static 'img/main/Store.PNG' %}" alt="Responsive Ecommerce Website"></a>
                     </div>
 
@@ -982,7 +985,7 @@
                         <input type="text" name="name" placeholder="Name" class="contact__input">
                         <input required type="mail" name="email" placeholder="Email" class="contact__input">
                         <textarea name="message" id="" cols="0" rows="10" class="contact__input"></textarea>
-                        <input id="myWish" type="submit" value="Send" class="lebenslauf__button button">
+                        <input id="myWish" type="submit" value="Schicken" class="lebenslauf__button button">
                     </form>
                 </div>
             </section>
