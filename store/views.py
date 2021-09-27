@@ -7,16 +7,16 @@ from ipware import get_client_ip
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-import datetime, os, json, random
+import socket, datetime, os, json, random
 from .utils import minfunc
 
 
 
 ## get another ip of same user (2 IPs in total from same user)
-#def get_ip_address():
-#    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-#    s.connect(("8.8.8.8", 80))
-#    return s.getsockname()[0] random.choices(list, k=3)
+def get_ip_address():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return s.getsockname()[0]
 
 
 
@@ -49,7 +49,6 @@ def products(request):
     var = 'sent'
     if 'color_code' in request.session:
         color = request.session['color_code']
-        print(color)
         del request.session['color_code']
     else:
         color = '#00c300f5'
@@ -61,6 +60,8 @@ def portfolio(request):
     var = None
     if not ip:
         ip = '0.0.0.0'
+    if '127' in ip:
+        ip = get_ip_address()
     IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
     form = PortfolioForm(request.POST or None)
     if request.user.is_authenticated:
@@ -77,7 +78,7 @@ def portfolio(request):
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
         if request.method == 'POST':
             if form.is_valid():
                 Portfolio.objects.create(user=customer, name=request.POST['name'], email=request.POST['email'], message=request.POST['message'], ip=IP)
@@ -152,11 +153,13 @@ def checkout(request):
         ip, is_routable = get_client_ip(request)
         if not ip:
             ip = '0.0.0.0'
+        if '127' in ip:
+            ip = get_ip_address()
         IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=ip, email=IP+'@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
         try:
             order, created = Order.objects.get_or_create(customer=customer)
         except:
@@ -210,11 +213,13 @@ def updateItem(request):
         ip, is_routable = get_client_ip(request)
         if not ip:
             ip = '0.0.0.0'
+        if '127' in ip:
+            ip = get_ip_address()
         IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     item, created = OrderItem.objects.get_or_create(order=order, product=product)
@@ -237,11 +242,13 @@ def delete_item(request, id):
         ip, is_routable = get_client_ip(request)
         if not ip:
             ip = '0.0.0.0'
+        if '127' in ip:
+            ip = get_ip_address()
         IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
         try:
             customer = Customer.objects.get(ip=IP)
         except:
-            customer = Customer.objects.create(name=IP, email=IP+'@gmail.com', ip=IP)
+            customer = Customer.objects.create(name=ip, email=ip+'@gmail.com', ip=IP)
     product = Product.objects.get(id=id)
     order = Order.objects.get(customer=customer, complete=False)
     item = OrderItem.objects.get(order=order, product=product, to_order=False)
@@ -269,6 +276,8 @@ def register(request):
                 ip, is_routable = get_client_ip(request)
                 if not ip:
                     ip = '0.0.0.0'
+                if '127' in ip:
+                    ip = get_ip_address()
                 IP = f"{ip}||{str(request.META['HTTP_USER_AGENT'])}"
                 email = form.cleaned_data.get('email')
                 username = form.cleaned_data.get('username')
@@ -284,7 +293,7 @@ def register(request):
                     try:
                         customer = Customer.objects.get(email=email)
                     except:
-                        customer = Customer.objects.get(email=IP+'@gmail.com')
+                        customer = Customer.objects.get(email=ip+'@gmail.com')
                     if customer.user is not None:
                         # check if that user already have an account
                         request.session['color_code'] = '#b7e961'
