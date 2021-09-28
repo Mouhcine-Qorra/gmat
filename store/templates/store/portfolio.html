@@ -606,10 +606,11 @@
             }
 
             .work__img img{
-
-              transition: 1s;
-
-              cursor: pointer;
+                transition: 1s;
+                cursor: pointer;
+                width: 90%;
+                align-items: center;
+                margin-left: 5%;
 
             }
 
@@ -775,7 +776,7 @@
 
     <body>
         <!--===== HEADER =====-->
-        <img src="{% static 'img/main/Store.PNG' %}" style="display:none;">
+        <img src="{% static 'img/main/storename.png' %}" style="display:none;">
         <header class="l-header">
             <nav class="nav bd-grid">
                 <div>
@@ -971,7 +972,7 @@
                 <div class="work__container bd-grid">
                     <div class="work__img">
                         <h2 class="skills__subtitle" style="text-align: center;"><a href="{% url 'store' %}" target=”_blank”>Ecommerce Website</a></h2>
-                        <a href="{% url 'store' %}" target=”_blank”><img src="{% static 'img/main/Store.PNG' %}" alt="Responsive Ecommerce Website"></a>
+                        <a href="{% url 'store' %}" target=”_blank”><img src="{% static 'img/main/storename.png' %}" alt="Responsive Ecommerce Website"></a>
                     </div>
 
                 </div>
