@@ -84,10 +84,10 @@ DATABASES['default'].update(db_from_env)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'demo_2',
-        'USER': 'mouhcin07',
-        'PASSWORD': 'Taro98765',
-        'HOST': 'database-1.cakmwhbjvrrh.us-east-2.rds.amazonaws.com',
+        'NAME': 'xxxx',
+        'USER': 'xxxx',
+        'PASSWORD': 'xxxx',
+        'HOST': 'xxxx.amazonaws.com',
         'PORT': '5432',
     }
 }
@@ -145,8 +145,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'tjrbgsyamouhcin789@gmail.com'
-EMAIL_HOST_PASSWORD = 'Taro98765'
+EMAIL_HOST_USER = 'xxxx'
+EMAIL_HOST_PASSWORD = 'xxxx'
 
 
 #AWS CONFIG
@@ -154,9 +154,9 @@ USE_S3 = True
 if USE_S3:
     AWS_QUERYSTRING_AUTH = False
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    AWS_ACCESS_KEY_ID = 'AKIAQRUQA634OGUB6NWG'
-    AWS_SECRET_ACCESS_KEY = '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'
-    AWS_STORAGE_BUCKET_NAME = 'mouhcin-first-s3'
+    AWS_ACCESS_KEY_ID = 'xxxx'
+    AWS_SECRET_ACCESS_KEY = 'xxxx'
+    AWS_STORAGE_BUCKET_NAME = 'xxxx'
     AWS_S3_FILE_OVERWRITE = False
     AWS_DEFAULT_ACL = None
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
